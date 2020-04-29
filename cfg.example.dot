@@ -1,0 +1,10 @@
+digraph "CFG for 'example' function" {
+	label="CFG for 'example' function";
+
+	Node0x565055a13bf0 [shape=record,label="{bb:\l  %tmp = alloca i32, align 4\l  %tmp4 = alloca i32, align 4\l  %tmp5 = alloca i32, align 4\l  %tmp6 = alloca i32, align 4\l  %tmp7 = alloca i32, align 4\l  %tmp8 = alloca i32, align 4\l  store i32 %arg, i32* %tmp, align 4\l  store i32 %arg1, i32* %tmp4, align 4\l  store i32 %arg2, i32* %tmp5, align 4\l  store i32 %arg3, i32* %tmp6, align 4\l  %tmp9 = load i32, i32* %tmp5, align 4\l  %tmp10 = icmp eq i32 %tmp9, 1\l  %tmp12 = load i32, i32* %tmp, align 4\l  %tmp13 = load i32, i32* %tmp4, align 4\l  %tmp14 = add nsw i32 %tmp12, %tmp13\l  %tmp7_0 = add i32 0, %tmp14\l  %tmp7_1 = add i32 0, 0\l  %tmp7_2 = select i1 %tmp10, i32 %tmp7_0, i32 %tmp7_1\l  store i32 %tmp7_2, i32* %tmp7, align 4\l  store i32 0, i32* %tmp8, align 4\l  %tmp17 = load i32, i32* %tmp6, align 4\l  %tmp18 = icmp eq i32 %tmp17, 0\l  br i1 %tmp18, label %bb19, label %bb22\l|{<s0>T|<s1>F}}"];
+	Node0x565055a13bf0:s0 -> Node0x565055a14fa0;
+	Node0x565055a13bf0:s1 -> Node0x565055a15070;
+	Node0x565055a14fa0 [shape=record,label="{bb19:                                             \l  %tmp20 = load i32, i32* %tmp7, align 4\l  %tmp21 = mul nsw i32 %tmp20, 6\l  store i32 %tmp21, i32* %tmp8, align 4\l  br label %bb22\l}"];
+	Node0x565055a14fa0 -> Node0x565055a15070;
+	Node0x565055a15070 [shape=record,label="{bb22:                                             \l  %tmp23 = load i32, i32* %tmp8, align 4\l  ret i32 %tmp23\l}"];
+}

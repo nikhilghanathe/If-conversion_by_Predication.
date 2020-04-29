@@ -1,0 +1,86 @@
+{
+  "name": "CFG for 'example' function",
+  "directed": true,
+  "strict": false,
+  "label": "CFG for 'example' function",
+  "_subgraph_cnt": 0,
+  "objects": [
+    {
+      "_gvid": 0,
+      "name": "Node0x5590848f9b50",
+      "label": "{bb:\\l  %tmp = alloca i32, align 4\\l  %tmp4 = alloca i32, align 4\\l  %tmp5 = alloca i32, align 4\\l  %tmp6 = alloca i32, align 4\\l  %tmp7 = alloca i32, align 4\\l  %tmp8 = alloca i32, align 4\\l  store i32 %arg, i32* %tmp, align 4\\l  store i32 %arg1, i32* %tmp4, align 4\\l  store i32 %arg2, i32* %tmp5, align 4\\l  store i32 %arg3, i32* %tmp6, align 4\\l  %tmp9 = load i32, i32* %tmp5, align 4\\l  %tmp10 = icmp eq i32 %tmp9, 1\\l  br i1 %tmp10, label %bb11, label %bb15\\l|{<s0>T|<s1>F}}",
+      "shape": "record"
+    },
+    {
+      "_gvid": 1,
+      "name": "Node0x5590848fa960",
+      "label": "{bb11:                                             \\l  %tmp12 = load i32, i32* %tmp, align 4\\l  %tmp13 = load i32, i32* %tmp4, align 4\\l  %tmp14 = add nsw i32 %tmp12, %tmp13\\l  store i32 %tmp14, i32* %tmp7, align 4\\l  br label %bb16\\l}",
+      "shape": "record"
+    },
+    {
+      "_gvid": 2,
+      "name": "Node0x5590848faa30",
+      "label": "{bb15:                                             \\l  store i32 0, i32* %tmp7, align 4\\l  br label %bb16\\l}",
+      "shape": "record"
+    },
+    {
+      "_gvid": 3,
+      "name": "Node0x5590848fad40",
+      "label": "{bb16:                                             \\l  store i32 0, i32* %tmp8, align 4\\l  %tmp17 = load i32, i32* %tmp6, align 4\\l  %tmp18 = icmp eq i32 %tmp17, 0\\l  br i1 %tmp18, label %bb19, label %bb22\\l|{<s0>T|<s1>F}}",
+      "shape": "record"
+    },
+    {
+      "_gvid": 4,
+      "name": "Node0x5590848fb050",
+      "label": "{bb19:                                             \\l  %tmp20 = load i32, i32* %tmp7, align 4\\l  %tmp21 = mul nsw i32 %tmp20, 6\\l  store i32 %tmp21, i32* %tmp8, align 4\\l  br label %bb22\\l}",
+      "shape": "record"
+    },
+    {
+      "_gvid": 5,
+      "name": "Node0x5590848fb120",
+      "label": "{bb22:                                             \\l  %tmp23 = load i32, i32* %tmp8, align 4\\l  ret i32 %tmp23\\l}",
+      "shape": "record"
+    }
+  ],
+  "edges": [
+    {
+      "_gvid": 0,
+      "tail": 0,
+      "head": 1,
+      "tailport": "s0"
+    },
+    {
+      "_gvid": 1,
+      "tail": 0,
+      "head": 2,
+      "tailport": "s1"
+    },
+    {
+      "_gvid": 2,
+      "tail": 1,
+      "head": 3
+    },
+    {
+      "_gvid": 3,
+      "tail": 2,
+      "head": 3
+    },
+    {
+      "_gvid": 4,
+      "tail": 3,
+      "head": 4,
+      "tailport": "s0"
+    },
+    {
+      "_gvid": 5,
+      "tail": 3,
+      "head": 5,
+      "tailport": "s1"
+    },
+    {
+      "_gvid": 6,
+      "tail": 4,
+      "head": 5
+    }
+  ]
+}

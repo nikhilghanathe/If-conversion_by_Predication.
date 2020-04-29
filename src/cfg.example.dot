@@ -1,0 +1,17 @@
+digraph "CFG for 'example' function" {
+	label="CFG for 'example' function";
+
+	Node0x559f962dfb50 [shape=record,label="{bb:\l  %tmp = alloca i32, align 4\l  %tmp4 = alloca i32, align 4\l  %tmp5 = alloca i32, align 4\l  %tmp6 = alloca i32, align 4\l  %tmp7 = alloca i32, align 4\l  %tmp8 = alloca i32, align 4\l  store i32 %arg, i32* %tmp, align 4\l  store i32 %arg1, i32* %tmp4, align 4\l  store i32 %arg2, i32* %tmp5, align 4\l  store i32 %arg3, i32* %tmp6, align 4\l  %tmp9 = load i32, i32* %tmp5, align 4\l  %tmp10 = icmp eq i32 %tmp9, 1\l  br i1 %tmp10, label %bb11, label %bb15\l|{<s0>T|<s1>F}}"];
+	Node0x559f962dfb50:s0 -> Node0x559f962e0960;
+	Node0x559f962dfb50:s1 -> Node0x559f962e0a30;
+	Node0x559f962e0960 [shape=record,label="{bb11:                                             \l  %tmp12 = load i32, i32* %tmp, align 4\l  %tmp13 = load i32, i32* %tmp4, align 4\l  %tmp14 = add nsw i32 %tmp12, %tmp13\l  store i32 %tmp14, i32* %tmp7, align 4\l  br label %bb16\l}"];
+	Node0x559f962e0960 -> Node0x559f962e0d40;
+	Node0x559f962e0a30 [shape=record,label="{bb15:                                             \l  store i32 0, i32* %tmp7, align 4\l  br label %bb16\l}"];
+	Node0x559f962e0a30 -> Node0x559f962e0d40;
+	Node0x559f962e0d40 [shape=record,label="{bb16:                                             \l  store i32 0, i32* %tmp8, align 4\l  %tmp17 = load i32, i32* %tmp6, align 4\l  %tmp18 = icmp eq i32 %tmp17, 0\l  br i1 %tmp18, label %bb19, label %bb22\l|{<s0>T|<s1>F}}"];
+	Node0x559f962e0d40:s0 -> Node0x559f962e1050;
+	Node0x559f962e0d40:s1 -> Node0x559f962e1120;
+	Node0x559f962e1050 [shape=record,label="{bb19:                                             \l  %tmp20 = load i32, i32* %tmp7, align 4\l  %tmp21 = mul nsw i32 %tmp20, 6\l  store i32 %tmp21, i32* %tmp8, align 4\l  br label %bb22\l}"];
+	Node0x559f962e1050 -> Node0x559f962e1120;
+	Node0x559f962e1120 [shape=record,label="{bb22:                                             \l  %tmp23 = load i32, i32* %tmp8, align 4\l  ret i32 %tmp23\l}"];
+}
