@@ -11,14 +11,27 @@ class Predicate():
 		self.fileName = fileName
 		self.cfgfname = 'cfg.json'
 		self.cfg = {}
+		self.branches = {}
+
 
 	def parseJson(self):
 		fp = open(self.cfgfname, 'r')
 		cfgData = json.load(fp)
 		cfg = getBBs(cfgData)
+		self.cfg = copy.deepcopy(cfg)
 		if Config.DEBUG:
-			writeCFG(cfg)
-		sss
+			writeCFG(self.cfg)
+		
+
+		
+
+
+
+	def collectBranches(self):
+		for id, node in self.cfg.items():
+			
+			
+
 
 
 	def run(self):
@@ -28,6 +41,10 @@ class Predicate():
 
 		#read json file and get the basic blocks
 		self.parseJson()
+
+		#identify all if-else candiate blocks
+		self.collectBranches()
+
 
 		os.chdir(os.path.join('..'))
 

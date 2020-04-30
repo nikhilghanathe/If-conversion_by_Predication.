@@ -79,8 +79,8 @@ def getBBs(cfg):
 		id = node['_gvid']
 		label = node['label']
 		name, cmdList = getInstructions(label)
-		node = CFGNode(name, cmdList)
-		bb_dict.update({name:node})
+		node = CFGNode(name, id, cmdList)
+		bb_dict.update({id:node})
 
 	bb_data = cfg['edges']
 	for edge in bb_data:
@@ -95,15 +95,10 @@ def getBBs(cfg):
 
 def getInstructions(label):
 	cmds = label.split('\\l')
-	name= cmds[0][1:-1]
+	name= (cmds[0].replace(' ', ''))[1:-1]
 	cmdList = cmds[1:]
 	return name, cmdList
 
-
-def constructCFG(cfg, ):
-	cfg_new = {}
-	for name, node in cfg.items():
-		node_new = CFGNode
 
 
 
@@ -113,19 +108,20 @@ def constructCFG(cfg, ):
 def writeCFG(cfg, fname=''):
 	if fname=='': fp = open(os.path.join('debug.json'), 'w')
 	else: fp = open(os.path.join(fname), 'w')
-
-	dict_t = {}
+	dict_t_out= {}
+	
 	for name, node in cfg.items():
-		dict_t.update({'name': name})
-		dict_t.update({'id': id})
-		dict_t.update({'cmdList': cmdList})
-		dict_t.update({'producers': producers})
-		dict_t.update({'consumers': consumers})
-		dict_t.update({'isHead': isHead})
-		dict_t.update({'isTBlock': isTBlock})
-		dict_t.update({'isFBlock': isFBlock})
-		dict_t.update({'isTail': isTail})
-
-	json.dump(dict_t, fp, indent=4)
+		dict_t = {}
+		dict_t.update({'name': node.name})
+		dict_t.update({'id': node.id})
+		dict_t.update({'cmdList': node.cmdList})
+		dict_t.update({'producers': node.producers})
+		dict_t.update({'consumers': node.consumers})
+		dict_t.update({'isHead': node.isHead})
+		dict_t.update({'isTBlock': node.isTBlock})
+		dict_t.update({'isFBlock': node.isFBlock})
+		dict_t.update({'isTail': node.isTail})
+		dict_t_out.update({name:dict_t})
+	json.dump(dict_t_out, fp, indent=4)
 	fp.close()
 

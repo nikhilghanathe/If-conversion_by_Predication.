@@ -2,9 +2,9 @@ import os
 import copy
 
 class CFGNode():
-	def __init__(self, name, cmdList):
+	def __init__(self, name, id, cmdList):
 		self.name = name
-		self.id = -1# TBA
+		self.id = id
 		self.cmdList = cmdList
 		self.edges = []
 		self.producers = []
@@ -30,4 +30,13 @@ class CFGNode():
 
 	def getProducers(self):
 		return self.producers
+		
+
+class BranchBlock():
+	def __init__(self, id, head, TB, FB, tail):
+		self.id = id
+		self.head = head
+		self.TB = TB
+		self.FB = FB
+		self.tail = tail
 		
