@@ -6,6 +6,7 @@ class CFGNode():
 		self.name = name
 		self.id = id
 		self.cmdList = cmdList
+		self.cmdIR_l = []
 		self.edges = []
 		self.producers = []
 		self.consumers= []
@@ -13,7 +14,7 @@ class CFGNode():
 		self.isTBlock = False
 		self.isFBlock = False
 		self.isTail = False
-
+		
 	def addEdge(self, edge):
 		edges = copy.deepcopy(self.edges)
 		edges.append(edge)
@@ -30,13 +31,18 @@ class CFGNode():
 
 	def getProducers(self):
 		return self.producers
-		
+
+	def getConsumers(self):
+		return self.consumers
+
+	def setCmdIR_l(self, cmd_l):
+		self.cmdIR_l = copy.deepcopy(cmd_l)
+
 
 class BranchBlock():
-	def __init__(self, id, head, TB, FB, tail):
+	def __init__(self, id, head):
 		self.id = id
 		self.head = head
-		self.TB = TB
-		self.FB = FB
-		self.tail = tail
-		
+		self.TB = 0
+		self.FB = 0
+		self.tail = 0

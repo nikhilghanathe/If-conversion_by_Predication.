@@ -3,7 +3,7 @@ import subprocess
 import shutil
 import pygraphviz
 import json
-from CFGNode import * 
+from CFG import * 
 
 
 def convertToLL(fname):
@@ -115,6 +115,7 @@ def writeCFG(cfg, fname=''):
 		dict_t.update({'name': node.name})
 		dict_t.update({'id': node.id})
 		dict_t.update({'cmdList': node.cmdList})
+		#dict_t.update({'cmdIR_l': node.cmdIR_l})
 		dict_t.update({'producers': node.producers})
 		dict_t.update({'consumers': node.consumers})
 		dict_t.update({'isHead': node.isHead})
@@ -125,3 +126,18 @@ def writeCFG(cfg, fname=''):
 	json.dump(dict_t_out, fp, indent=4)
 	fp.close()
 
+def writeBranchBlocks(cfg, fname=''):
+	if fname=='': fp = open(os.path.join('debugBranchBlocks.json'), 'w')
+	else: fp = open(os.path.join(fname), 'w')
+	dict_t_out= {}
+	
+	for name, node in cfg.items():
+		dict_t = {}
+		dict_t.update({'id': node.id})
+		dict_t.update({'head': node.head})
+		dict_t.update({'TB': node.TB})
+		dict_t.update({'FB': node.FB})
+		dict_t.update({'tail': node.tail})
+		dict_t_out.update({name:dict_t})
+	json.dump(dict_t_out, fp, indent=4)
+	fp.close()

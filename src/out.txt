@@ -1,0 +1,310 @@
+SUCCESS Crating IR
+SUCCESS naming IR
+SUCCESS Creating CFG
+SUCCESS converting CFG to json
+  %tmp = alloca i32, align 4
+%tmp = alloca i32, align 4
+%tmp = alloca i32, align 4
+['%tmp', '=', 'alloca', 'i32,', 'align', '4']
+(['%tmp', '=', 'alloca', 'i32,', 'align', '4'], u'  %tmp = alloca i32, align 4')
+  %tmp4 = alloca i32, align 4
+%tmp4 = alloca i32, align 4
+%tmp4 = alloca i32, align 4
+['%tmp4', '=', 'alloca', 'i32,', 'align', '4']
+(['%tmp4', '=', 'alloca', 'i32,', 'align', '4'], u'  %tmp4 = alloca i32, align 4')
+  %tmp5 = alloca i32, align 4
+%tmp5 = alloca i32, align 4
+%tmp5 = alloca i32, align 4
+['%tmp5', '=', 'alloca', 'i32,', 'align', '4']
+(['%tmp5', '=', 'alloca', 'i32,', 'align', '4'], u'  %tmp5 = alloca i32, align 4')
+  %tmp6 = alloca i32, align 4
+%tmp6 = alloca i32, align 4
+%tmp6 = alloca i32, align 4
+['%tmp6', '=', 'alloca', 'i32,', 'align', '4']
+(['%tmp6', '=', 'alloca', 'i32,', 'align', '4'], u'  %tmp6 = alloca i32, align 4')
+  %tmp7 = alloca i32, align 4
+%tmp7 = alloca i32, align 4
+%tmp7 = alloca i32, align 4
+['%tmp7', '=', 'alloca', 'i32,', 'align', '4']
+(['%tmp7', '=', 'alloca', 'i32,', 'align', '4'], u'  %tmp7 = alloca i32, align 4')
+  %tmp8 = alloca i32, align 4
+%tmp8 = alloca i32, align 4
+%tmp8 = alloca i32, align 4
+['%tmp8', '=', 'alloca', 'i32,', 'align', '4']
+(['%tmp8', '=', 'alloca', 'i32,', 'align', '4'], u'  %tmp8 = alloca i32, align 4')
+  store i32 %arg, i32* %tmp, align 4
+store i32 %arg, i32* %tmp, align 4
+store i32 %arg, i32* %tmp, align 4
+['store', 'i32', '%arg,', 'i32*', '%tmp,', 'align', '4']
+(['store', 'i32', '%arg,', 'i32*', '%tmp,', 'align', '4'], u'  store i32 %arg, i32* %tmp, align 4')
+  store i32 %arg1, i32* %tmp4, align 4
+store i32 %arg1, i32* %tmp4, align 4
+store i32 %arg1, i32* %tmp4, align 4
+['store', 'i32', '%arg1,', 'i32*', '%tmp4,', 'align', '4']
+(['store', 'i32', '%arg1,', 'i32*', '%tmp4,', 'align', '4'], u'  store i32 %arg1, i32* %tmp4, align 4')
+  store i32 %arg2, i32* %tmp5, align 4
+store i32 %arg2, i32* %tmp5, align 4
+store i32 %arg2, i32* %tmp5, align 4
+['store', 'i32', '%arg2,', 'i32*', '%tmp5,', 'align', '4']
+(['store', 'i32', '%arg2,', 'i32*', '%tmp5,', 'align', '4'], u'  store i32 %arg2, i32* %tmp5, align 4')
+  store i32 %arg3, i32* %tmp6, align 4
+store i32 %arg3, i32* %tmp6, align 4
+store i32 %arg3, i32* %tmp6, align 4
+['store', 'i32', '%arg3,', 'i32*', '%tmp6,', 'align', '4']
+(['store', 'i32', '%arg3,', 'i32*', '%tmp6,', 'align', '4'], u'  store i32 %arg3, i32* %tmp6, align 4')
+  %tmp9 = load i32, i32* %tmp5, align 4
+%tmp9 = load i32, i32* %tmp5, align 4
+%tmp9 = load i32, i32* %tmp5, align 4
+['%tmp9', '=', 'load', 'i32,', 'i32*', '%tmp5,', 'align', '4']
+(['%tmp9', '=', 'load', 'i32,', 'i32*', '%tmp5,', 'align', '4'], u'  %tmp9 = load i32, i32* %tmp5, align 4')
+  %tmp10 = icmp eq i32 %tmp9, 1
+%tmp10 = icmp eq i32 %tmp9, 1
+%tmp10 = icmp eq i32 %tmp9, 1
+['%tmp10', '=', 'icmp', 'eq', 'i32', '%tmp9,', '1']
+(['%tmp10', '=', 'icmp', 'eq', 'i32', '%tmp9,', '1'], u'  %tmp10 = icmp eq i32 %tmp9, 1')
+  br i1 %tmp10, label %bb11, label %bb15
+br i1 %tmp10, label %bb11, label %bb15
+br i1 %tmp10, label %bb11, label %bb15
+['br', 'i1', '%tmp10,', 'label', '%bb11,', 'label', '%bb15']
+(['br', 'i1', '%tmp10,', 'label', '%bb11,', 'label', '%bb15'], u'  br i1 %tmp10, label %bb11, label %bb15')
+['br', 'i1', '%tmp10,', 'label', '%bb11,', 'label', '%bb15']
+|{<s0>T|<s1>F}}
+|{<s0>T|<s1>F}}
+|{<s0>T|<s1>F}}
+['|{<s0>T|<s1>F}}']
+(['|{<s0>T|<s1>F}}'], u'|{<s0>T|<s1>F}}')
+<IR.Statement instance at 0x7ff85012b690>
+<IR.Statement instance at 0x7ff85012b370>
+<IR.Statement instance at 0x7ff85012b230>
+<IR.Statement instance at 0x7ff85012b0a0>
+<IR.Statement instance at 0x7ff85012b140>
+<IR.Statement instance at 0x7ff85012b1e0>
+<IR.Store instance at 0x7ff850132370>
+<IR.Store instance at 0x7ff850132500>
+<IR.Store instance at 0x7ff850132640>
+<IR.Store instance at 0x7ff850132780>
+<IR.Statement instance at 0x7ff850132820>
+<IR.Statement instance at 0x7ff8501328c0>
+<IR.Branch instance at 0x7ff850132a00>
+<IR.Statement instance at 0x7ff850132a50>
+  %tmp12 = load i32, i32* %tmp, align 4
+%tmp12 = load i32, i32* %tmp, align 4
+%tmp12 = load i32, i32* %tmp, align 4
+['%tmp12', '=', 'load', 'i32,', 'i32*', '%tmp,', 'align', '4']
+(['%tmp12', '=', 'load', 'i32,', 'i32*', '%tmp,', 'align', '4'], u'  %tmp12 = load i32, i32* %tmp, align 4')
+  %tmp13 = load i32, i32* %tmp4, align 4
+%tmp13 = load i32, i32* %tmp4, align 4
+%tmp13 = load i32, i32* %tmp4, align 4
+['%tmp13', '=', 'load', 'i32,', 'i32*', '%tmp4,', 'align', '4']
+(['%tmp13', '=', 'load', 'i32,', 'i32*', '%tmp4,', 'align', '4'], u'  %tmp13 = load i32, i32* %tmp4, align 4')
+  %tmp14 = add nsw i32 %tmp12, %tmp13
+%tmp14 = add nsw i32 %tmp12, %tmp13
+%tmp14 = add nsw i32 %tmp12, %tmp13
+['%tmp14', '=', 'add', 'nsw', 'i32', '%tmp12,', '%tmp13']
+(['%tmp14', '=', 'add', 'nsw', 'i32', '%tmp12,', '%tmp13'], u'  %tmp14 = add nsw i32 %tmp12, %tmp13')
+  store i32 %tmp14, i32* %tmp7, align 4
+store i32 %tmp14, i32* %tmp7, align 4
+store i32 %tmp14, i32* %tmp7, align 4
+['store', 'i32', '%tmp14,', 'i32*', '%tmp7,', 'align', '4']
+(['store', 'i32', '%tmp14,', 'i32*', '%tmp7,', 'align', '4'], u'  store i32 %tmp14, i32* %tmp7, align 4')
+  br label %bb16
+br label %bb16
+br label %bb16
+['br', 'label', '%bb16']
+(['br', 'label', '%bb16'], u'  br label %bb16')
+['br', 'label', '%bb16']
+}
+}
+}
+['}']
+(['}'], u'}')
+<IR.Statement instance at 0x7ff850132b40>
+<IR.Statement instance at 0x7ff850132be0>
+<IR.Statement instance at 0x7ff850132c80>
+<IR.Store instance at 0x7ff850132dc0>
+<IR.Branch instance at 0x7ff850132f00>
+<IR.Statement instance at 0x7ff850132f50>
+  store i32 0, i32* %tmp7, align 4
+store i32 0, i32* %tmp7, align 4
+store i32 0, i32* %tmp7, align 4
+['store', 'i32', '0,', 'i32*', '%tmp7,', 'align', '4']
+(['store', 'i32', '0,', 'i32*', '%tmp7,', 'align', '4'], u'  store i32 0, i32* %tmp7, align 4')
+  br label %bb16
+br label %bb16
+br label %bb16
+['br', 'label', '%bb16']
+(['br', 'label', '%bb16'], u'  br label %bb16')
+['br', 'label', '%bb16']
+}
+}
+}
+['}']
+(['}'], u'}')
+<IR.Store instance at 0x7ff850136140>
+<IR.Branch instance at 0x7ff850136280>
+<IR.Statement instance at 0x7ff8501362d0>
+  store i32 0, i32* %tmp8, align 4
+store i32 0, i32* %tmp8, align 4
+store i32 0, i32* %tmp8, align 4
+['store', 'i32', '0,', 'i32*', '%tmp8,', 'align', '4']
+(['store', 'i32', '0,', 'i32*', '%tmp8,', 'align', '4'], u'  store i32 0, i32* %tmp8, align 4')
+  %tmp17 = load i32, i32* %tmp6, align 4
+%tmp17 = load i32, i32* %tmp6, align 4
+%tmp17 = load i32, i32* %tmp6, align 4
+['%tmp17', '=', 'load', 'i32,', 'i32*', '%tmp6,', 'align', '4']
+(['%tmp17', '=', 'load', 'i32,', 'i32*', '%tmp6,', 'align', '4'], u'  %tmp17 = load i32, i32* %tmp6, align 4')
+  %tmp18 = icmp eq i32 %tmp17, 0
+%tmp18 = icmp eq i32 %tmp17, 0
+%tmp18 = icmp eq i32 %tmp17, 0
+['%tmp18', '=', 'icmp', 'eq', 'i32', '%tmp17,', '0']
+(['%tmp18', '=', 'icmp', 'eq', 'i32', '%tmp17,', '0'], u'  %tmp18 = icmp eq i32 %tmp17, 0')
+  br i1 %tmp18, label %bb19, label %bb22
+br i1 %tmp18, label %bb19, label %bb22
+br i1 %tmp18, label %bb19, label %bb22
+['br', 'i1', '%tmp18,', 'label', '%bb19,', 'label', '%bb22']
+(['br', 'i1', '%tmp18,', 'label', '%bb19,', 'label', '%bb22'], u'  br i1 %tmp18, label %bb19, label %bb22')
+['br', 'i1', '%tmp18,', 'label', '%bb19,', 'label', '%bb22']
+|{<s0>T|<s1>F}}
+|{<s0>T|<s1>F}}
+|{<s0>T|<s1>F}}
+['|{<s0>T|<s1>F}}']
+(['|{<s0>T|<s1>F}}'], u'|{<s0>T|<s1>F}}')
+<IR.Store instance at 0x7ff850136460>
+<IR.Statement instance at 0x7ff850136500>
+<IR.Statement instance at 0x7ff8501365a0>
+<IR.Branch instance at 0x7ff8501366e0>
+<IR.Statement instance at 0x7ff850136730>
+  %tmp20 = load i32, i32* %tmp7, align 4
+%tmp20 = load i32, i32* %tmp7, align 4
+%tmp20 = load i32, i32* %tmp7, align 4
+['%tmp20', '=', 'load', 'i32,', 'i32*', '%tmp7,', 'align', '4']
+(['%tmp20', '=', 'load', 'i32,', 'i32*', '%tmp7,', 'align', '4'], u'  %tmp20 = load i32, i32* %tmp7, align 4')
+  %tmp21 = mul nsw i32 %tmp20, 6
+%tmp21 = mul nsw i32 %tmp20, 6
+%tmp21 = mul nsw i32 %tmp20, 6
+['%tmp21', '=', 'mul', 'nsw', 'i32', '%tmp20,', '6']
+(['%tmp21', '=', 'mul', 'nsw', 'i32', '%tmp20,', '6'], u'  %tmp21 = mul nsw i32 %tmp20, 6')
+  store i32 %tmp21, i32* %tmp8, align 4
+store i32 %tmp21, i32* %tmp8, align 4
+store i32 %tmp21, i32* %tmp8, align 4
+['store', 'i32', '%tmp21,', 'i32*', '%tmp8,', 'align', '4']
+(['store', 'i32', '%tmp21,', 'i32*', '%tmp8,', 'align', '4'], u'  store i32 %tmp21, i32* %tmp8, align 4')
+  br label %bb22
+br label %bb22
+br label %bb22
+['br', 'label', '%bb22']
+(['br', 'label', '%bb22'], u'  br label %bb22')
+['br', 'label', '%bb22']
+}
+}
+}
+['}']
+(['}'], u'}')
+<IR.Statement instance at 0x7ff850136820>
+<IR.Statement instance at 0x7ff8501368c0>
+<IR.Store instance at 0x7ff850136a00>
+<IR.Branch instance at 0x7ff850136b40>
+<IR.Statement instance at 0x7ff850136b90>
+  %tmp23 = load i32, i32* %tmp8, align 4
+%tmp23 = load i32, i32* %tmp8, align 4
+%tmp23 = load i32, i32* %tmp8, align 4
+['%tmp23', '=', 'load', 'i32,', 'i32*', '%tmp8,', 'align', '4']
+(['%tmp23', '=', 'load', 'i32,', 'i32*', '%tmp8,', 'align', '4'], u'  %tmp23 = load i32, i32* %tmp8, align 4')
+  ret i32 %tmp23
+ret i32 %tmp23
+ret i32 %tmp23
+['ret', 'i32', '%tmp23']
+(['ret', 'i32', '%tmp23'], u'  ret i32 %tmp23')
+}
+}
+}
+['}']
+(['}'], u'}')
+<IR.Statement instance at 0x7ff850136c80>
+<IR.Statement instance at 0x7ff850136cd0>
+<IR.Statement instance at 0x7ff850136d20>
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff85012b690>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff85012b370>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff85012b230>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff85012b0a0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff85012b140>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff85012b1e0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850132370>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850132500>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850132640>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850132780>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850132820>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501328c0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff850132a00>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff850132a00>, True, '%tmp10')
+[1, 2]
+(1, [0], '44444444444444444')
+(1, [0], '44444444444444444')
+(<IR.Label instance at 0x7ff850132960>, <IR.Label instance at 0x7ff8501329b0>)
+('bb11', 'bb15')
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850136460>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136500>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501365a0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff8501366e0>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff8501366e0>, True, '%tmp18')
+[4, 5]
+(1, [3], '44444444444444444')
+(2, [3, 4], '44444444444444444')
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136820>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501368c0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850136a00>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff850136b40>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136b90>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136c80>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136cd0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136d20>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136c80>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136cd0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136d20>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850132b40>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850132be0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850132c80>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850132dc0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff850132f00>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850132f50>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850136460>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136500>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501365a0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff8501366e0>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff8501366e0>, True, '%tmp18')
+[4, 5]
+(1, [3], '44444444444444444')
+(2, [3, 4], '44444444444444444')
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136820>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501368c0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850136a00>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff850136b40>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136b90>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136c80>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136cd0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136d20>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136c80>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136cd0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136d20>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850136140>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff850136280>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501362d0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850136460>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136500>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501365a0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff8501366e0>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff8501366e0>, True, '%tmp18')
+[4, 5]
+(1, [3], '44444444444444444')
+(2, [3, 4], '44444444444444444')
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136820>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff8501368c0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Store instance at 0x7ff850136a00>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Branch instance at 0x7ff850136b40>, True)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136b90>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136c80>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136cd0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136d20>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136c80>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136cd0>, False)
+('!!!!!!!!!!!!!!!!!!!!!!!!!!11', <IR.Statement instance at 0x7ff850136d20>, False)
