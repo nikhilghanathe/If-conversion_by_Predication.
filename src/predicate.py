@@ -188,7 +188,8 @@ class Predicate():
 		for cm in cmds:
 			if isinstance(cm, IR.Store):
 				src, dest, align = cm.src, cm.dest, cm.align
-				cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_t', (dest.type)), cm.align)
+				#cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_t', (dest.type)), cm.align)
+				cm_new = IR.Assn(IR.Var(dest.idf+'_t', (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
 				cmds_new += [cm_new]
 				self.TB_st.update({dest:cm.align.val})
 			elif isinstance(cm, IR.Branch):
@@ -205,8 +206,8 @@ class Predicate():
 		for cm in cmds:
 			if isinstance(cm, IR.Store):
 				src, dest, align = cm.src, cm.dest, cm.align
-				
-				cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_f', (dest.type)), cm.align)
+				#cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_f', (dest.type)), cm.align)
+				cm_new = IR.Assn(IR.Var(dest.idf+'_f', (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
 				cmds_new += [cm_new]
 				self.FB_st.update({dest:cm.align.val})
 			elif isinstance(cm, IR.Branch):
@@ -217,6 +218,12 @@ class Predicate():
 		self.cfg.update({id:node})
 
 
+	def getResolvedType(self, var_type):
+		type = var_type.type
+		if type[-1]=='*':#if a pointer
+			return IR.Type(type[:-1])
+		else:
+			return IR.Type(type)
 	def transformTail(self, id, condn_var):
 		node = self.cfg[id]
 		cmds = node.getCmdIR_l()
@@ -224,12 +231,18 @@ class Predicate():
 		for var in self.TB_st.keys():
 			if var.idf in list(x.idf for x in self.FB_st) :
 				var.isLHS = True
-				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', var.type, isLHS=True), IR.Select(IR.Var(condn_var.idf, (condn_var.type)), IR.Var(var.idf+"_t", (var.type)), IR.Var(var.idf+"_f", (var.type)) ) )]
-				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', var.type), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
+				print(var.type)
+
+				resolvedType = self.getResolvedType(var.type)
+
+
+				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', resolvedType, isLHS=True), IR.Select(IR.Var(condn_var.idf, (condn_var.type)), IR.Var(var.idf+"_t", (resolvedType)), IR.Var(var.idf+"_f", (resolvedType)) ) )]
+				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', resolvedType), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
 			else:
 				var.isLHS = True
-				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', var.type, isLHS=True), IR.Select(condn_var, IR.Var(var.idf+"_t", (var.type)), IR.Var('0', (var.type) )))]
-				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', var.type), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
+				resolvedType = self.getResolvedType(var.type)
+				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', resolvedType, isLHS=True), IR.Select(condn_var, IR.Var(var.idf+"_t", (resolvedType)), IR.Var('0', (resolvedType) )))]
+				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', resolvedType), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
 
 		node.setCmdIR_l(cmds_new+node.getCmdIR_l())
 		self.cfg.update({id:node})
@@ -342,6 +355,8 @@ class Predicate():
 			self.PrintAlign(ir)
 		elif isinstance(ir, IR.Type):
 			self.PrintType(ir)
+		elif isinstance(ir, IR.Add):
+			self.PrintAdd(ir)
 		else:
 			print(IR)
 			raise('codegen for this not supported')
@@ -418,14 +433,20 @@ class Predicate():
 		
 
 	def PrintInt(self, ir):
-		self.out.printf(ir.num)
+		self.out.printf(str(ir.num))
 
 	def PrintCmd(self, ir):
 		self.out.printf(ir.cmd + '\n')
 
 	def PrintType(self, ir):
-		print(ir, ir.type)
 		self.out.printf(ir.type)
+
+	def PrintAdd(self,ir):
+		self.out.printf(' add nsw ')
+		self.Print(ir.var1)
+		self.out.printf(', ')
+		self.Print(ir.var2)
+		self.out.printf('\n')
 
 
 
