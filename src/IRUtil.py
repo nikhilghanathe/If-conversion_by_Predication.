@@ -37,18 +37,20 @@ def resolveCmd(cmd, cmd_old):
 	print(cmd, cmd_old)
 	if cmd_old.encode('utf-8')[0] =='|':#signals metadata
 		return IR.Statement('')
+	elif cmd_old.encode('utf-8')[0] =='{' or cmd_old.encode('utf-8')[0] =='}':
+		return IR.Statement('')
 	elif cmd[0]==	'store':
 		rule = RULES['Store']
 		print(cmd)
-		src_var = IR.Var(cmd[2].replace(',', ''), cmd[1].replace(',', ''))
-		dest_var = IR.Var(cmd[4].replace(',', ''), cmd[3].replace(',', ''))
+		src_var = IR.Var(cmd[2].replace(',', ''), IR.Type(cmd[1].replace(',', '')))
+		dest_var = IR.Var(cmd[4].replace(',', ''), IR.Type(cmd[3].replace(',', '')))
 		align  = IR.Align(cmd[6].replace(',', ''))
 		return IR.Store(src_var, dest_var, align)
 	elif cmd[0] == 'br':
 		rule = RULES['Branch']
 		print(cmd)
 		if len(cmd)>4:
-			condn_var = IR.Var(cmd[2].replace(',', ''), cmd[1].replace(',', ''))
+			condn_var = IR.Var(cmd[2].replace(',', ''), IR.Type(cmd[1].replace(',', '')))
 			label_t = IR.Label(cmd[4].replace(',', ''))
 			label_f = IR.Label(cmd[6].replace(',', '')) 
 			return IR.Branch(condn_var, label_t, label_f)

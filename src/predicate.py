@@ -18,8 +18,9 @@ class Predicate():
 		self.branchLabel = 0 # 
 		self.branch_blocks = {}
 		self.isVisited = {}
-		self.TB_st = []
-		self.FB_st = []
+		self.TB_st = {}
+		self.FB_st = {}
+		self.debug = False
 
 	def parseJson(self):
 		fp = open(self.cfgfname, 'r')
@@ -187,9 +188,9 @@ class Predicate():
 		for cm in cmds:
 			if isinstance(cm, IR.Store):
 				src, dest, align = cm.src, cm.dest, cm.align
-				cm_new = IR.Store(src, IR.Var(dest.idf+'_t', dest.type), cm.align)
+				cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_t', (dest.type)), cm.align)
 				cmds_new += [cm_new]
-				self.TB_st.append(dest)
+				self.TB_st.update({dest:cm.align.val})
 			elif isinstance(cm, IR.Branch):
 				cmds_new += []
 			else:
@@ -204,11 +205,10 @@ class Predicate():
 		for cm in cmds:
 			if isinstance(cm, IR.Store):
 				src, dest, align = cm.src, cm.dest, cm.align
-				print(src.idf, src.type)
-				ss
-				cm_new = IR.Store(src, IR.Var(dest.idf+'_f', dest.type), cm.align)
+				
+				cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_f', (dest.type)), cm.align)
 				cmds_new += [cm_new]
-				self.FB_st.append(dest)
+				self.FB_st.update({dest:cm.align.val})
 			elif isinstance(cm, IR.Branch):
 				cmds_new += []
 			else:
@@ -221,15 +221,19 @@ class Predicate():
 		node = self.cfg[id]
 		cmds = node.getCmdIR_l()
 		cmds_new = []
-		for var in self.TB_st:
+		for var in self.TB_st.keys():
 			if var.idf in list(x.idf for x in self.FB_st) :
-				cmds_new += [IR.Assn(var, IR.Select(condn_var, IR.Var(var.idf+"_t", var.type), IR.Var(var.idf+"_f", var.type) ) )]
+				var.isLHS = True
+				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', var.type, isLHS=True), IR.Select(IR.Var(condn_var.idf, (condn_var.type)), IR.Var(var.idf+"_t", (var.type)), IR.Var(var.idf+"_f", (var.type)) ) )]
+				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', var.type), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
 			else:
-				cmds_new += [IR.Assn(var, IR.Select(condn_var, IR.Var(var.idf+"_t", var.type), IR.Var('0', var.type)))]
+				var.isLHS = True
+				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', var.type, isLHS=True), IR.Select(condn_var, IR.Var(var.idf+"_t", (var.type)), IR.Var('0', (var.type) )))]
+				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', var.type), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
 
 		node.setCmdIR_l(cmds_new+node.getCmdIR_l())
 		self.cfg.update({id:node})
-		self.TB_st, self.FB_st = [], []
+		self.TB_st, self.FB_st = {}, {}
 
 
 	def mergeHead(self, head, TB, FB, tail):
@@ -247,12 +251,14 @@ class Predicate():
 			cmds_FB = FBNode.getCmdIR_l()
 
 		cmds_merged = cmds_head + cmds_TB + cmds_FB
-		cmds_merged += [IR.Branch(IR.Var('', ''), IR.Label('%'+tailNode.name), IR.Label(''))]
+		cmd = IR.Branch(IR.Var('', ''), IR.Label('%'+tailNode.name), IR.Label(''))
+		cmd.isCond=False
+		cmds_merged += [cmd]
 		headNode.setCmdIR_l(cmds_merged)
 		self.cfg.update({head : headNode})
 
 		self.cfg.pop(TB)
-		self.cfg.pop(FB)
+		if not tail in headNode.getConsumers():self.cfg.pop(FB)
 
 
 		headNode = self.cfg[head]
@@ -336,6 +342,9 @@ class Predicate():
 			self.PrintAlign(ir)
 		elif isinstance(ir, IR.Type):
 			self.PrintType(ir)
+		else:
+			print(IR)
+			raise('codegen for this not supported')
 
 
 
@@ -375,6 +384,8 @@ class Predicate():
 
 	def PrintSelect(self, ir):
 		self.out.printf('select ')
+		print(ir.condn_var.isLHS, ir.condn_var.idf, ir.condn_var.type )
+		self.debug = True
 		self.Print(ir.condn_var)
 		self.out.printf(', ')
 		self.Print(ir.var_t)
@@ -386,7 +397,8 @@ class Predicate():
 		self.out.printf(ir.cmd + '\n')
 
 	def PrintVar(self, ir):
-		if not ir.isLHS: self.Print(ir.type)
+		if not ir.isLHS: 
+			self.Print(ir.type)
 		self.out.printf(' ')
 		self.out.printf(ir.idf)
 
@@ -394,7 +406,7 @@ class Predicate():
 		self.Print(ir.var_l)
 		self.out.printf(' = ')
 		self.Print(ir.var_r)
-		self.out.printf('\n')
+		#self.out.printf('\n')
 
 	def PrintLabel(self, ir):
 		self.out.printf('label ')
@@ -403,6 +415,7 @@ class Predicate():
 	def PrintAlign(self, ir):
 		self.out.printf('align ')
 		self.out.printf(ir.val)
+		
 
 	def PrintInt(self, ir):
 		self.out.printf(ir.num)
@@ -411,6 +424,7 @@ class Predicate():
 		self.out.printf(ir.cmd + '\n')
 
 	def PrintType(self, ir):
+		print(ir, ir.type)
 		self.out.printf(ir.type)
 
 
