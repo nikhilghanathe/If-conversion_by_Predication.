@@ -1,5 +1,6 @@
 import os
 import copy
+import IR
 
 class CFGNode():
 	def __init__(self, name, id, cmdList):
@@ -14,7 +15,7 @@ class CFGNode():
 		self.isTBlock = False
 		self.isFBlock = False
 		self.isTail = False
-		
+
 	def addEdge(self, edge):
 		edges = copy.deepcopy(self.edges)
 		edges.append(edge)
@@ -38,6 +39,9 @@ class CFGNode():
 	def setCmdIR_l(self, cmd_l):
 		self.cmdIR_l = copy.deepcopy(cmd_l)
 
+	def getCmdIR_l(self):
+		return self.cmdIR_l
+
 
 class BranchBlock():
 	def __init__(self, id, head):
@@ -46,3 +50,7 @@ class BranchBlock():
 		self.TB = 0
 		self.FB = 0
 		self.tail = 0
+		self.condn_var = IR.Var('', '') 
+		self.TB_st = []
+		self.FB_st = []
+

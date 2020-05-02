@@ -17,6 +17,9 @@ class Predicate():
 		self.out = Writer.Writer(os.path.join('output', fileName[:-2]+'_tranformed.ll')) # output file
 		self.branchLabel = 0 # 
 		self.branch_blocks = {}
+		self.isVisited = {}
+		self.TB_st = []
+		self.FB_st = []
 
 	def parseJson(self):
 		fp = open(self.cfgfname, 'r')
@@ -39,7 +42,10 @@ class Predicate():
 
 	def collectBranches(self):
 		rootNode = self.getRootNode()
+		for id, node in self.cfg.items():
+			self.isVisited.update({id:False})
 		self.identifyCondBlocks(rootNode)
+		
 
 	def createIR(self):
 		cfg_new = {}
@@ -56,21 +62,17 @@ class Predicate():
 		self.cfg.update(cfg_new)
 		writeCFG(self.cfg)
 
-		self.printProg_debug()	
 
-	def printProg_debug(self):
-		for id, node in self.cfg.items():
-			self.Print(IR.Prog(node.cmdIR_l))
-		self.out.close()
-	
 
 	#idenitfiy if this is the head od the 
-	def indentifyHead(self, node):
+	def identifyHead(self, node):
 		cmd_l = []
+
 		for cmd in node.cmdIR_l:
 			print('!!!!!!!!!!!!!!!!!!!!!!!!!!11', cmd, isinstance(cmd, IR.Branch))
 			if isinstance(cmd, IR.Branch):
 				condn_var, label_true, label_false = cmd.condn_var, cmd.label_true, cmd.label_false
+				
 				if condn_var.idf !='': #if it is a confitional branch block
 					print('!!!!!!!!!!!!!!!!!!!!!!!!!!11', cmd, isinstance(cmd, IR.Branch), condn_var.idf)
 					b_node= BranchBlock(self.branchLabel, node.id)
@@ -81,16 +83,28 @@ class Predicate():
 
 
 	def identifyCondBlocks(self, node):
-		id, b_node, cmd = self.indentifyHead(node)
-		if b_node != None:
-			if self.isValidCondBlock(node):
-				condn_var, label_true, label_false = cmd.condn_var, cmd.label_true, cmd.label_false
-				headNode = self.cfg[id]
-				TB, FB, tail, nextRootNode = self.getTFT(cmd, headNode)
-				b_node.TB, b_node.FB, b_node.tail = TB, FB, tail
-				self.branch_blocks.update({id:b_node})
-				self.branchLabel +=1 # increment label
-				self.identifyCondBlocks(self.cfg[nextRootNode])
+		if not self.isVisited[node.id]:
+			id, b_node, cmd = self.identifyHead(node)
+			print(id, b_node, cmd)
+			if b_node != None:
+				if self.isValidCondBlock(node):
+					condn_var, label_true, label_false = cmd.condn_var, cmd.label_true, cmd.label_false
+					headNode = self.cfg[id]
+					print(' the branch label is ', self.branchLabel)
+					# if headNode==1:
+					print('444',condn_var.idf, id)
+					TB, FB, tail, nextRootNode = self.getTFT(cmd, node.id)
+					self.isVisited[id], self.isVisited[TB], self.isVisited[FB] = True, True, True
+					b_node.TB, b_node.FB, b_node.tail = TB, FB, tail
+					b_node.condn_var = condn_var
+					self.branch_blocks.update({id:b_node})
+					self.branchLabel +=1 # increment label
+					if self.branchLabel==2:
+						print(id, TB, FB, tail)
+						
+					print(self.branch_blocks)
+				
+					#self.identifyCondBlocks(self.cfg[nextRootNode])
 
 
 		#recursively go through the consumers
@@ -100,21 +114,25 @@ class Predicate():
 		writeBranchBlocks(self.branch_blocks)
 
 
-	def getTFT(self, cmd, node):
-		print(cmd.label_true, cmd.label_false)
+	def getTFT(self, cmd, id):
+		node = self.cfg[id]
+		print(cmd.label_true.name, cmd.label_false.name)
 		condn_var, label_true, label_false = cmd.condn_var, cmd.label_true.name[1:], cmd.label_false.name[1:]
 		consumers = node.getConsumers()
 		id_TB, id_FB, id_tail = -1, -1, -1
 		print(label_true, label_false)
+		print('consumers = ', consumers, node.id)
 		for con in consumers:
-			if self.cfg[con].name==label_true:
+			print('label name is ', con, self.cfg[con].name.encode('utf-8'), label_true)
+			if self.cfg[con].name.encode('utf-8')==label_true:
 				id_TB = con
-			if self.cfg[con].name==label_false:
+			if self.cfg[con].name.encode('utf-8')==label_false:
 				id_FB = con
+		print(id_TB, id_FB)
 		if id_TB==-1 and id_FB==-1:
-			raise('Error in Extarcting Branch Block\n')
+			raise('Error in Extracting Branch Block\n')
 
-		if id_FB in self.cfg[con].getConsumers():# triangle block
+		if id_FB in self.cfg[id_TB].getConsumers():# triangle block
 			id_tail= id_FB
 			return id_TB, id_FB, id_tail, id_tail
 
@@ -124,7 +142,7 @@ class Predicate():
 		if len(con_t) ==1 and len(con_f)==1:
 			id_tail = con_t[0]
 		else:
-			raise('Error in Extarcting Branch Block\n')			
+			raise('Error in Extracting Branch Block\n')			
 		return id_TB, id_FB, id_tail, id_tail
 
 	def isValidCondBlock(self, node):
@@ -134,18 +152,159 @@ class Predicate():
 			for cons in consumers:
 				prod = self.cfg[cons].getProducers()
 				print(len(prod), prod , '44444444444444444')
-				if len(prod)!=1: return False
+				if len(prod)!=1: 
+					prod.remove(node.id)
+					if not prod in consumers:
+						return False
+					# if self.branchLabel==1:
+					# 	print(node.id, consumers)
+					# 	ss
+					#return False
+
 			return True
+
 		return False
 
 
 
+
+	'''Tranform functions'''
+
+	def transformHead(self, id):
+		node = self.cfg[id]
+		cmds = node.getCmdIR_l()
+		cmds_new = []
+		for cm in cmds:
+			if not isinstance(cm, IR.Branch):
+				cmds_new += [cm]
+		node.setCmdIR_l(cmds_new)
+		self.cfg.update({id:node})
+
+	def transformTB(self, id):
+		node = self.cfg[id]
+		cmds = node.getCmdIR_l()
+		cmds_new = []
+		for cm in cmds:
+			if isinstance(cm, IR.Store):
+				src, dest, align = cm.src, cm.dest, cm.align
+				cm_new = IR.Store(src, IR.Var(dest.idf+'_t', dest.type), cm.align)
+				cmds_new += [cm_new]
+				self.TB_st.append(dest)
+			elif isinstance(cm, IR.Branch):
+				cmds_new += []
+			else:
+				cmds_new += [cm]
+		node.setCmdIR_l(cmds_new)
+		self.cfg.update({id:node})
+
+	def transformFB(self, id):
+		node = self.cfg[id]
+		cmds = node.getCmdIR_l()
+		cmds_new = []
+		for cm in cmds:
+			if isinstance(cm, IR.Store):
+				src, dest, align = cm.src, cm.dest, cm.align
+				print(src.idf, src.type)
+				ss
+				cm_new = IR.Store(src, IR.Var(dest.idf+'_f', dest.type), cm.align)
+				cmds_new += [cm_new]
+				self.FB_st.append(dest)
+			elif isinstance(cm, IR.Branch):
+				cmds_new += []
+			else:
+				cmds_new += [cm]
+		node.setCmdIR_l(cmds_new)
+		self.cfg.update({id:node})
+
+
+	def transformTail(self, id, condn_var):
+		node = self.cfg[id]
+		cmds = node.getCmdIR_l()
+		cmds_new = []
+		for var in self.TB_st:
+			if var.idf in list(x.idf for x in self.FB_st) :
+				cmds_new += [IR.Assn(var, IR.Select(condn_var, IR.Var(var.idf+"_t", var.type), IR.Var(var.idf+"_f", var.type) ) )]
+			else:
+				cmds_new += [IR.Assn(var, IR.Select(condn_var, IR.Var(var.idf+"_t", var.type), IR.Var('0', var.type)))]
+
+		node.setCmdIR_l(cmds_new+node.getCmdIR_l())
+		self.cfg.update({id:node})
+		self.TB_st, self.FB_st = [], []
+
+
+	def mergeHead(self, head, TB, FB, tail):
+		headNode = self.cfg[head]
+		cmds_head = headNode.getCmdIR_l()
+
+		TBNode = self.cfg[TB]
+		cmds_TB = TBNode.getCmdIR_l()
+
+		tailNode = self.cfg[tail]
+		if tail in headNode.getConsumers():
+			cmds_FB = []
+		else:
+			FBNode = self.cfg[FB]
+			cmds_FB = FBNode.getCmdIR_l()
+
+		cmds_merged = cmds_head + cmds_TB + cmds_FB
+		cmds_merged += [IR.Branch(IR.Var('', ''), IR.Label('%'+tailNode.name), IR.Label(''))]
+		headNode.setCmdIR_l(cmds_merged)
+		self.cfg.update({head : headNode})
+
+		self.cfg.pop(TB)
+		self.cfg.pop(FB)
+
+
+		headNode = self.cfg[head]
+		cmds_head = headNode.getCmdIR_l()
+
+
+
+
+	def transformBranchBlocks(self):
+		for id, node in self.branch_blocks.items():
+			self.transformHead(node.head)
+			self.transformTB(node.TB)
+			if node.FB!= node.tail:
+				self.transformFB(node.FB)
+				self.transformTail(node.tail, node.condn_var)
+			else:
+				self.transformTail(node.tail, node.condn_var)
+
+			self.mergeHead(node.head, node.TB, node.FB, node.tail)
 
 	'''Resolve methods for each type of IR we defined'''
 
 	# def resolveCmd(self, ir):
 	# 	if isinstance(ir, IR.Assn):
 	# 		return self.resovleAssn
+
+
+
+
+	#driver function
+	def run(self):
+		
+		os.chdir(os.path.join('tmp'))
+
+
+		#read json file and get the basic blocks
+		self.parseJson()
+
+		self.createIR()
+
+		#identify all if-else candiate blocks
+		self.collectBranches()
+
+		self.transformBranchBlocks()
+
+		self.printProg_debug()
+
+		self.out.close()
+
+		os.chdir(os.path.join('..'))
+
+
 
 
 
@@ -179,6 +338,15 @@ class Predicate():
 			self.PrintType(ir)
 
 
+
+	def printProg_debug(self):
+		for id, node in self.cfg.items():
+			self.out.printf(node.name+':\n\t')
+			self.Print(IR.Prog(node.cmdIR_l))
+			self.out.printf('\n\n')
+			
+		
+
 	def PrintProg(self, ir):
 		for cmd in ir.cmd_l:
 			self.Print(cmd)
@@ -209,9 +377,9 @@ class Predicate():
 		self.out.printf('select ')
 		self.Print(ir.condn_var)
 		self.out.printf(', ')
-		self.out.Print(ir.var_t)
+		self.Print(ir.var_t)
 		self.out.printf(',')
-		self.out.Print(ir.var_f)
+		self.Print(ir.var_f)
 		self.out.printf('\n')
 
 	def PrintStatement(self, ir):
@@ -224,7 +392,7 @@ class Predicate():
 
 	def PrintAssn(self, ir):
 		self.Print(ir.var_l)
-		self.out.Print(' = ')
+		self.out.printf(' = ')
 		self.Print(ir.var_r)
 		self.out.printf('\n')
 
@@ -244,28 +412,6 @@ class Predicate():
 
 	def PrintType(self, ir):
 		self.out.printf(ir.type)
-
-
-
-
-	def run(self):
-		
-		os.chdir(os.path.join('tmp'))
-
-
-		#read json file and get the basic blocks
-		self.parseJson()
-
-		self.createIR()
-
-		#identify all if-else candiate blocks
-		self.collectBranches()
-
-
-		os.chdir(os.path.join('..'))
-
-
-
 
 
 

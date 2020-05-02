@@ -138,6 +138,8 @@ def writeBranchBlocks(cfg, fname=''):
 		dict_t.update({'TB': node.TB})
 		dict_t.update({'FB': node.FB})
 		dict_t.update({'tail': node.tail})
+		dict_t.update({'TB_st': node.TB_st})
+		dict_t.update({'FB_st': node.FB_st})
 		dict_t_out.update({name:dict_t})
 	json.dump(dict_t_out, fp, indent=4)
 	fp.close()

@@ -83,10 +83,9 @@ class Var:
 		self.isLHS = isLHS
 
 class Assn:
-	def __init__(self, var_l, var_r, align):
+	def __init__(self, var_l, var_r):
 		self.var_l = var_l
 		self.var_r = var_r
-		self.align = align
 
 
 
@@ -110,6 +109,11 @@ class Select:
 		self.condn_var = condn_var
 		self.var_t = var_t
 		self.var_f = var_f
+
+class Add:
+	def __init__(self, var1, var2):
+		self.var1 = var1
+		self.var2 = var2
 
 
 '''memory ops'''

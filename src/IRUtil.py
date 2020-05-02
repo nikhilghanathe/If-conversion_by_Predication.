@@ -35,10 +35,11 @@ def parseCmd(cmd):
 def resolveCmd(cmd, cmd_old):
 	#resolve Assn
 	print(cmd, cmd_old)
-	if cmd[0][0] =='|{':#signals metadata
+	if cmd_old.encode('utf-8')[0] =='|':#signals metadata
 		return IR.Statement('')
 	elif cmd[0]==	'store':
 		rule = RULES['Store']
+		print(cmd)
 		src_var = IR.Var(cmd[2].replace(',', ''), cmd[1].replace(',', ''))
 		dest_var = IR.Var(cmd[4].replace(',', ''), cmd[3].replace(',', ''))
 		align  = IR.Align(cmd[6].replace(',', ''))
