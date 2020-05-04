@@ -92,7 +92,7 @@ class Predicate():
 				self.branch_blocks.update({id:b_node})
 				self.branchLabel +=1 # increment label
 					
-
+		self.isVisited[node.id] = True 
 		#recursively go through the consumers
 		for cons in node.getConsumers():
 			if not self.isVisited[cons]:
@@ -180,6 +180,7 @@ class Predicate():
 		self.cfg.update({id:node})
 
 	def transformTB(self, id):
+		writeCFG(self.cfg)
 		node = self.cfg[id]
 		cmds = node.getCmdIR_l()
 		cmds_new = []
@@ -187,7 +188,8 @@ class Predicate():
 			if isinstance(cm, IR.Store):
 				src, dest, align = cm.src, cm.dest, cm.align
 				#cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_t', (dest.type)), cm.align)
-				cm_new = IR.Assn(IR.Var(dest.idf+'_t', (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
+				suffix = str(Config.count) 
+				cm_new = IR.Assn(IR.Var(dest.idf+'_t'+suffix, (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
 				cmds_new += [cm_new]
 				self.TB_st.update({dest:cm.align.val})
 			elif isinstance(cm, IR.Branch):
@@ -205,7 +207,8 @@ class Predicate():
 			if isinstance(cm, IR.Store):
 				src, dest, align = cm.src, cm.dest, cm.align
 				#cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_f', (dest.type)), cm.align)
-				cm_new = IR.Assn(IR.Var(dest.idf+'_f', (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
+				suffix = str(Config.count)
+				cm_new = IR.Assn(IR.Var(dest.idf+'_f'+suffix, (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
 				cmds_new += [cm_new]
 				self.FB_st.update({dest:cm.align.val})
 			elif isinstance(cm, IR.Branch):
@@ -219,7 +222,7 @@ class Predicate():
 	def getResolvedType(self, var_type):
 		type = var_type.type
 		if type[-1]=='*':#if a pointer
-			return IR.Type(type[:-1])
+			return IR.Type(type[:-1]) #our tem variables are non pointers always
 		else:
 			return IR.Type(type)
 	def transformTail(self, id, condn_var):
@@ -230,17 +233,20 @@ class Predicate():
 			if var.idf in list(x.idf for x in self.FB_st) :
 				var.isLHS = True
 				resolvedType = self.getResolvedType(var.type)
-				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', resolvedType, isLHS=True), IR.Select(IR.Var(condn_var.idf, (condn_var.type)), IR.Var(var.idf+"_t", (resolvedType)), IR.Var(var.idf+"_f", (resolvedType)) ) )]
-				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', resolvedType), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
+				suffix = str(Config.count)
+				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge'+suffix, resolvedType, isLHS=True), IR.Select(IR.Var(condn_var.idf, (condn_var.type)), IR.Var(var.idf+"_t"+suffix, (resolvedType)), IR.Var(var.idf+"_f"+suffix, (resolvedType)) ) )]
+				cmds_new += [IR.Store(IR.Var(var.idf+'_merge'+suffix, resolvedType), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
 			else:
 				var.isLHS = True
+				suffix = str(Config.count)
 				resolvedType = self.getResolvedType(var.type)
-				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', resolvedType, isLHS=True), IR.Select(condn_var, IR.Var(var.idf+"_t", (resolvedType)), IR.Var('0', (resolvedType) )))]
+				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', resolvedType, isLHS=True), IR.Select(condn_var, IR.Var(var.idf+"_t"+suffix, (resolvedType)), IR.Var('0', (resolvedType) )))]
 				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', resolvedType), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
 
 		node.setCmdIR_l(cmds_new+node.getCmdIR_l())
 		self.cfg.update({id:node})
 		self.TB_st, self.FB_st = {}, {}
+		
 
 
 	def mergeHead(self, head, TB, FB, tail):
@@ -263,9 +269,12 @@ class Predicate():
 		cmds_merged += [cmd]
 		headNode.setCmdIR_l(cmds_merged)
 		self.cfg.update({head : headNode})
-
+		self.isVisited[TB] = True
+		
 		self.cfg.pop(TB)
-		if not tail in headNode.getConsumers():self.cfg.pop(FB)
+		if not tail in headNode.getConsumers():
+			self.isVisited[FB] = True
+			self.cfg.pop(FB)
 
 
 		headNode = self.cfg[head]
@@ -275,6 +284,7 @@ class Predicate():
 
 
 	def transformBranchBlocks(self):
+		Config.count= 0 # monotonic counter for making sure the code is SSA conformed
 		for id, node in self.branch_blocks.items():
 			self.transformHead(node.head)
 			self.transformTB(node.TB)
@@ -285,6 +295,7 @@ class Predicate():
 				self.transformTail(node.tail, node.condn_var)
 
 			self.mergeHead(node.head, node.TB, node.FB, node.tail)
+			Config.count +=1
 
 
 

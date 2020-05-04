@@ -118,7 +118,7 @@ module example_tb(clock);
     end
   end
   endfunction
-  parameter MEMSIZE = 1;
+  parameter MEMSIZE = 1, MEM_var_419563_419510=32, MEM_var_419566_419510=32, MEM_var_419569_419510=32;
   // AUXILIARY VARIABLES DECLARATION
   time startTime, endTime, sim_time;
   integer res_file, file, _r_, _n_, _i_, _addr_i_;
@@ -138,10 +138,10 @@ module example_tb(clock);
   input clock;
   reg reset;
   reg start_port;
-  reg [31:0] a;
-  reg [31:0] b;
-  reg [31:0] c;
-  reg [31:0] d;
+  reg [31:0] Pd5;
+  reg [31:0] Pd6;
+  reg [31:0] Pd7;
+  reg [31:0] Pd8;
   
   reg start_next_sim;
   // OUTPUT SIGNALS
@@ -151,7 +151,7 @@ module example_tb(clock);
   reg [31:0] registered_return_port;
   
   // MODULE INSTANTIATION AND PORTS BINDING
-  example example (.clock(clock), .reset(reset), .start_port(start_port), .a(a), .b(b), .c(c), .d(d), .done_port(done_port), .return_port(return_port));
+  example #(.MEM_var_419563_419510(32), .MEM_var_419566_419510(32), .MEM_var_419569_419510(32)) example (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .done_port(done_port), .return_port(return_port));
   
   // Operation to be executed just one time
   initial
@@ -190,10 +190,10 @@ module example_tb(clock);
     reset = 0;
     next_start_port = 0;
     success = 1;
-    a = 0;
-    b = 0;
-    c = 0;
-    d = 0;
+    Pd5 = 0;
+    Pd6 = 0;
+    Pd7 = 0;
+    Pd8 = 0;
     
     
     ex_return_port = 0;
@@ -246,7 +246,7 @@ module example_tb(clock);
         _ch_ = $fgetc(file);
       end
       
-      // Read a value for a --------------------------------------------------------------
+      // Read a value for Pd5 --------------------------------------------------------------
       while (_ch_ == "/" || _ch_ == "\n")
       begin
         _r_ = $fgets(line, file);
@@ -268,7 +268,7 @@ module example_tb(clock);
       end
       if (_ch_ == "p")
       begin
-        _r_ = $fscanf(file,"%b\n", a); // expected format: bbb...b (example: 00101110)
+        _r_ = $fscanf(file,"%b\n", Pd5); // expected format: bbb...b (example: 00101110)
       end
       if (_r_ != 1) // error
       begin
@@ -291,9 +291,9 @@ module example_tb(clock);
       else
       begin
       end
-      // Value for a found ---------------------------------------------------------------
+      // Value for Pd5 found ---------------------------------------------------------------
       
-      // Read a value for b --------------------------------------------------------------
+      // Read a value for Pd6 --------------------------------------------------------------
       _ch_ = $fgetc(file);
       while (_ch_ == "/" || _ch_ == "\n")
       begin
@@ -302,7 +302,7 @@ module example_tb(clock);
       end
       if (_ch_ == "p")
       begin
-        _r_ = $fscanf(file,"%b\n", b); // expected format: bbb...b (example: 00101110)
+        _r_ = $fscanf(file,"%b\n", Pd6); // expected format: bbb...b (example: 00101110)
       end
       if (_r_ != 1) // error
       begin
@@ -325,9 +325,9 @@ module example_tb(clock);
       else
       begin
       end
-      // Value for b found ---------------------------------------------------------------
+      // Value for Pd6 found ---------------------------------------------------------------
       
-      // Read a value for c --------------------------------------------------------------
+      // Read a value for Pd7 --------------------------------------------------------------
       _ch_ = $fgetc(file);
       while (_ch_ == "/" || _ch_ == "\n")
       begin
@@ -336,7 +336,7 @@ module example_tb(clock);
       end
       if (_ch_ == "p")
       begin
-        _r_ = $fscanf(file,"%b\n", c); // expected format: bbb...b (example: 00101110)
+        _r_ = $fscanf(file,"%b\n", Pd7); // expected format: bbb...b (example: 00101110)
       end
       if (_r_ != 1) // error
       begin
@@ -359,9 +359,9 @@ module example_tb(clock);
       else
       begin
       end
-      // Value for c found ---------------------------------------------------------------
+      // Value for Pd7 found ---------------------------------------------------------------
       
-      // Read a value for d --------------------------------------------------------------
+      // Read a value for Pd8 --------------------------------------------------------------
       _ch_ = $fgetc(file);
       while (_ch_ == "/" || _ch_ == "\n")
       begin
@@ -370,7 +370,7 @@ module example_tb(clock);
       end
       if (_ch_ == "p")
       begin
-        _r_ = $fscanf(file,"%b\n", d); // expected format: bbb...b (example: 00101110)
+        _r_ = $fscanf(file,"%b\n", Pd8); // expected format: bbb...b (example: 00101110)
       end
       if (_r_ != 1) // error
       begin
@@ -393,7 +393,7 @@ module example_tb(clock);
       else
       begin
       end
-      // Value for d found ---------------------------------------------------------------
+      // Value for Pd8 found ---------------------------------------------------------------
       _ch_ = $fgetc(file);
       // Simulation start
       startTime = $time;

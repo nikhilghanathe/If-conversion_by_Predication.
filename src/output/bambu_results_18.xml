@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<bambu_results bambu_args="/opt/panda/bin/bambu --compiler=I386_CLANG6 --simulate example_statements_multiple_tranformed.ll " bambu_version="Version: PandA 0.9.6 - Revision 5e5e306b86383a7d85274d64977a3d71fdcff4fe" timestamp="2020-05-03T20:44:27" benchmark_name="example_statements_multiple_18">
+  <CYCLES value="20404"/>
+  <HLS_execution_time value="4.89999999999999999965"/>
+</bambu_results>

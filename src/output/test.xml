@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <function>
-  <testbench Pd5="17" Pd6="5" Pd7="15" Pd8="9"/>
+  <testbench a="5" b="14" c="12" d="6"/>
 </function>

@@ -1,7 +1,7 @@
 /*
  * Politecnico di Milano
- * Code created using PandA - Version: PandA 0.9.6 - Revision 5e5e306b86383a7d85274d64977a3d71fdcff4fe - Date 2020-05-03T19:45:02
- * /opt/panda/bin/bambu executed with: /opt/panda/bin/bambu --compiler=I386_CLANG6 --simulate ../tmp/example_multiple_forLoop_multiple_named.ll 
+ * Code created using PandA - Version: PandA 0.9.6 - Revision 5e5e306b86383a7d85274d64977a3d71fdcff4fe - Date 2020-05-03T21:40:13
+ * /opt/panda/bin/bambu executed with: /opt/panda/bin/bambu --simulate ../../benchmarks/example_statements_multiple_nestedLoop.c 
  */
 #define _FILE_OFFSET_BITS 64
 
@@ -66,7 +66,7 @@ void _Ptd2Bin_(FILE * __bambu_testbench_fp, unsigned char * num, unsigned int pr
    }
 }
 
-unsigned int example_multiple_forLoop_multiple(unsigned int Pd5, unsigned int Pd6, unsigned int Pd7, unsigned int Pd8);
+int example_statements_multiple_nestedLoop(int a, int b, int c, int d, int* e, int* f, int* g);
 
 #undef main
 int main()
@@ -80,33 +80,126 @@ int main()
    }
    
    // parameters declaration
-   unsigned int Pd5;
-   unsigned int Pd6;
-   unsigned int Pd7;
-   unsigned int Pd8;
+   int a;
+   int b;
+   int c;
+   int d;
+   int* e;
+   int* f;
+   int* g;
    fprintf(__bambu_testbench_fp, "//base address 1073741824\n");
    fprintf(__bambu_testbench_fp, "b01000000000000000000000000000000\n");
    {
+      fprintf(__bambu_testbench_fp, "//memory initialization for variable: internal_26666 value: 0\n");
+      for (__testbench_index = 0; __testbench_index < 4; ++__testbench_index)
+         fprintf(__bambu_testbench_fp, "m00000000\n");
+      // next_object_offset > reserved_mem_bytes
+      for (__testbench_index = 0; __testbench_index < 28; ++__testbench_index)
+         fprintf(__bambu_testbench_fp, "m00000000\n");
+      fprintf(__bambu_testbench_fp, "//memory initialization for variable: internal_26666 value: 0\n");
+      for (__testbench_index = 0; __testbench_index < 4; ++__testbench_index)
+         fprintf(__bambu_testbench_fp, "m00000000\n");
+      // next_object_offset > reserved_mem_bytes
+      for (__testbench_index = 0; __testbench_index < 28; ++__testbench_index)
+         fprintf(__bambu_testbench_fp, "m00000000\n");
+      fprintf(__bambu_testbench_fp, "//memory initialization for variable: internal_26666 value: 0\n");
+      for (__testbench_index = 0; __testbench_index < 4; ++__testbench_index)
+         fprintf(__bambu_testbench_fp, "m00000000\n");
+      // next_object_offset > reserved_mem_bytes
+      for (__testbench_index = 0; __testbench_index < 28; ++__testbench_index)
+         fprintf(__bambu_testbench_fp, "m00000000\n");
    }
    // return variable initialization
-   unsigned int return_port;
+   int return_port;
    {
       // parameter initialization
-      Pd5 = 17;
-      fprintf(__bambu_testbench_fp, "//parameter: Pd5 value: 17\n");
-      fprintf(__bambu_testbench_fp, "p00000000000000000000000000010001\n");
-      Pd6 = 5;
-      fprintf(__bambu_testbench_fp, "//parameter: Pd6 value: 5\n");
+      a = 5;
+      fprintf(__bambu_testbench_fp, "//parameter: a value: 5\n");
       fprintf(__bambu_testbench_fp, "p00000000000000000000000000000101\n");
-      Pd7 = 15;
-      fprintf(__bambu_testbench_fp, "//parameter: Pd7 value: 15\n");
-      fprintf(__bambu_testbench_fp, "p00000000000000000000000000001111\n");
-      Pd8 = 9;
-      fprintf(__bambu_testbench_fp, "//parameter: Pd8 value: 9\n");
-      fprintf(__bambu_testbench_fp, "p00000000000000000000000000001001\n");
+      b = 14;
+      fprintf(__bambu_testbench_fp, "//parameter: b value: 14\n");
+      fprintf(__bambu_testbench_fp, "p00000000000000000000000000001110\n");
+      c = 12;
+      fprintf(__bambu_testbench_fp, "//parameter: c value: 12\n");
+      fprintf(__bambu_testbench_fp, "p00000000000000000000000000001100\n");
+      d = 6;
+      fprintf(__bambu_testbench_fp, "//parameter: d value: 6\n");
+      fprintf(__bambu_testbench_fp, "p00000000000000000000000000000110\n");
+      int e_temp[] = {0};
+      e = e_temp;
+      fprintf(__bambu_testbench_fp, "//parameter: e value: 1073741824\n");
+      fprintf(__bambu_testbench_fp, "p01000000000000000000000000000000\n");
+      int f_temp[] = {0};
+      f = f_temp;
+      fprintf(__bambu_testbench_fp, "//parameter: f value: 1073741856\n");
+      fprintf(__bambu_testbench_fp, "p01000000000000000000000000100000\n");
+      int g_temp[] = {0};
+      g = g_temp;
+      fprintf(__bambu_testbench_fp, "//parameter: g value: 1073741888\n");
+      fprintf(__bambu_testbench_fp, "p01000000000000000000000001000000\n");
       // function call
-      return_port = example_multiple_forLoop_multiple(Pd5, Pd6, Pd7, Pd8);
+      return_port = example_statements_multiple_nestedLoop(a, b, c, d, e, f, g);
       // print expected results
+      {
+         int i0;
+         for(i0 = 0; i0 < 1; i0++)
+         {
+            fprintf(__bambu_testbench_fp, "//expected value for output: e[i0]\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(e[i0])) + 0, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(e[i0])) + 1, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(e[i0])) + 2, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(e[i0])) + 3, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+         }
+         fprintf(__bambu_testbench_fp, "e\n");
+      }
+      {
+         int i0;
+         for(i0 = 0; i0 < 1; i0++)
+         {
+            fprintf(__bambu_testbench_fp, "//expected value for output: f[i0]\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(f[i0])) + 0, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(f[i0])) + 1, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(f[i0])) + 2, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(f[i0])) + 3, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+         }
+         fprintf(__bambu_testbench_fp, "e\n");
+      }
+      {
+         int i0;
+         for(i0 = 0; i0 < 1; i0++)
+         {
+            fprintf(__bambu_testbench_fp, "//expected value for output: g[i0]\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(g[i0])) + 0, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(g[i0])) + 1, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(g[i0])) + 2, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+            fprintf(__bambu_testbench_fp, "o");
+            _Ptd2Bin_(__bambu_testbench_fp, ((unsigned char *)&(g[i0])) + 3, 8);
+            fprintf(__bambu_testbench_fp, "\n");
+         }
+         fprintf(__bambu_testbench_fp, "e\n");
+      }
       fprintf(__bambu_testbench_fp, "o");
       _Dec2Bin_(__bambu_testbench_fp, return_port, 32);
       fprintf(__bambu_testbench_fp, "\n");
