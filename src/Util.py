@@ -28,7 +28,7 @@ def convertToLL(fname):
 def runInstNamerPass(fname):
 	name = fname[:-2] #strip the .c from name
 	fname_ll = os.path.join( name+'.ll')
-	fname_ll_named = os.path.join( name+'_named.ll')	
+	fname_ll_named = os.path.join(name+'_named.ll')	
 	cmd = ['opt',  '-S', '-instnamer', fname_ll]
 	
 	os.chdir(os.path.join('tmp'))	
@@ -39,6 +39,7 @@ def runInstNamerPass(fname):
 	else:
 		print("SUCCESS naming IR")
 	os.chdir(os.path.join(".."))
+	
 
 
 def getCFG(fname):

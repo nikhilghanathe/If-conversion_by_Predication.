@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<bambu_results bambu_args="/opt/panda/bin/bambu --compiler=I386_CLANG6 --simulate example_forLoop_tranformed.ll " bambu_version="Version: PandA 0.9.6 - Revision 5e5e306b86383a7d85274d64977a3d71fdcff4fe" timestamp="2020-05-03T18:33:26" benchmark_name="example_forLoop_3">
+  <CYCLES value="1"/>
+  <HLS_execution_time value="2.18999999999999999984"/>
+</bambu_results>

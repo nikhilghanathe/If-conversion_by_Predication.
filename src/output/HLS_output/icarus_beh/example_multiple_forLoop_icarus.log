@@ -1,0 +1,75 @@
+Icarus Verilog Preprocessor version 10.1 (stable) ()
+
+Copyright (c) 1999-2011,2015 Stephen Williams (steve@icarus.com)
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+/usr/lib/x86_64-linux-gnu/ivl/system.sft: Processing System Function Table file.
+/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.sft: Processing System Function Table file.
+/usr/lib/x86_64-linux-gnu/ivl/v2005_math.sft: Processing System Function Table file.
+/usr/lib/x86_64-linux-gnu/ivl/va_math.sft: Processing System Function Table file.
+Using language generation: IEEE1364-2001-noconfig,no-specify,xtypes,icarus-misc
+PARSING INPUT
+LOCATING TOP-LEVEL MODULES
+   example_multiple_forLoop_tb_top
+ ... done, 0 seconds.
+ELABORATING DESIGN
+ ... done, 0.02 seconds.
+RUNNING FUNCTORS
+ -F cprop ...
+ ... Iteration detected 49 optimizations.
+ ... Iteration detected 0 optimizations.
+ ... Look for dangling constants
+ ... done
+ -F nodangle ...
+ ... scan for dangling signal and event nodes. (scomplete=F, ecomplete=F)
+ ... 1 iterations deleted 977 dangling signals and 0 events.
+ ... scan for dangling signal and event nodes. (scomplete=T, ecomplete=F)
+ ... 2 iterations deleted 977 dangling signals and 212 events.
+ ... done
+CALCULATING ISLANDS
+ ... done, 0 seconds.
+CODE GENERATION
+ ... invoking target_design
+ ... done, 0.01 seconds.
+STATISTICS
+lex_string: add_count=3108 hit_count=13291
+Icarus Verilog version 10.1 (stable) ()
+
+Copyright 1998-2015 Stephen Williams
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg25b43f128" -f"/tmp/ivrlg5b43f128" -p"/tmp/ivrli5b43f128"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh5b43f128" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
+Start reading vector           1's values from input file.
+
+Reading of vector values from input file completed. Simulation started.
+ return_port = 4294907296   expected = 4294907296 
+
+Simulation ended after                13204 cycles.
+
+Simulation completed with success
+

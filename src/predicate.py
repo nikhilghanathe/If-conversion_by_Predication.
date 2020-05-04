@@ -54,9 +54,6 @@ class Predicate():
 			cmd_l = []
 			for cmd in node.cmdList:
 				cmd_l += [IRUtil.parseCmd(cmd)]
-			for c in cmd_l:
-				print(c)
-			# node.setCmdIR_l(cmd_l)
 			node_new = CFGNode(node.name, node.id, node.cmdList)
 			node_new.cmdIR_l, node_new.edges, node_new.producers, node_new.consumers, node_new.isHead, node_new.isTBlock, node_new.isFBlock, node_new.isTail = cmd_l, node.edges, node.producers, node.consumers, node.isHead, node.isTBlock, node.isFBlock, node.isTail
 			cfg_new.update({id:node_new})
@@ -70,66 +67,50 @@ class Predicate():
 		cmd_l = []
 
 		for cmd in node.cmdIR_l:
-			print('!!!!!!!!!!!!!!!!!!!!!!!!!!11', cmd, isinstance(cmd, IR.Branch))
 			if isinstance(cmd, IR.Branch):
 				condn_var, label_true, label_false = cmd.condn_var, cmd.label_true, cmd.label_false
 				
 				if condn_var.idf !='': #if it is a confitional branch block
-					print('!!!!!!!!!!!!!!!!!!!!!!!!!!11', cmd, isinstance(cmd, IR.Branch), condn_var.idf)
-					b_node= BranchBlock(self.branchLabel, node.id)
-					self.branch_blocks.update({self.branchLabel: b_node})
-					return self.branchLabel, b_node, cmd
+					if self.isValidCondBlock(node):		
+						b_node= BranchBlock(self.branchLabel, node.id)
+						self.branch_blocks.update({self.branchLabel: b_node})
+						return self.branchLabel, b_node, cmd
 		return 0, None, IR.Statement('')
 
 
 
 	def identifyCondBlocks(self, node):
-		if not self.isVisited[node.id]:
-			id, b_node, cmd = self.identifyHead(node)
-			print(id, b_node, cmd)
-			if b_node != None:
-				if self.isValidCondBlock(node):
-					condn_var, label_true, label_false = cmd.condn_var, cmd.label_true, cmd.label_false
-					headNode = self.cfg[id]
-					print(' the branch label is ', self.branchLabel)
-					# if headNode==1:
-					print('444',condn_var.idf, id)
-					TB, FB, tail, nextRootNode = self.getTFT(cmd, node.id)
-					self.isVisited[id], self.isVisited[TB], self.isVisited[FB] = True, True, True
-					b_node.TB, b_node.FB, b_node.tail = TB, FB, tail
-					b_node.condn_var = condn_var
-					self.branch_blocks.update({id:b_node})
-					self.branchLabel +=1 # increment label
-					if self.branchLabel==2:
-						print(id, TB, FB, tail)
-						
-					print(self.branch_blocks)
-				
-					#self.identifyCondBlocks(self.cfg[nextRootNode])
-
+		id, b_node, cmd = self.identifyHead(node)
+		if b_node != None:
+			if self.isValidCondBlock(node):
+				condn_var, label_true, label_false = cmd.condn_var, cmd.label_true, cmd.label_false
+				headNode = self.cfg[id]
+				TB, FB, tail, nextRootNode = self.getTFT(cmd, node.id)
+				self.isVisited[id], self.isVisited[TB], self.isVisited[FB] = True, True, True
+				b_node.TB, b_node.FB, b_node.tail = TB, FB, tail
+				b_node.condn_var = condn_var
+				self.branch_blocks.update({id:b_node})
+				self.branchLabel +=1 # increment label
+					
 
 		#recursively go through the consumers
 		for cons in node.getConsumers():
-			self.identifyCondBlocks(self.cfg[cons])
+			if not self.isVisited[cons]:
+				self.identifyCondBlocks(self.cfg[cons])
 
 		writeBranchBlocks(self.branch_blocks)
 
 
 	def getTFT(self, cmd, id):
 		node = self.cfg[id]
-		print(cmd.label_true.name, cmd.label_false.name)
 		condn_var, label_true, label_false = cmd.condn_var, cmd.label_true.name[1:], cmd.label_false.name[1:]
 		consumers = node.getConsumers()
 		id_TB, id_FB, id_tail = -1, -1, -1
-		print(label_true, label_false)
-		print('consumers = ', consumers, node.id)
 		for con in consumers:
-			print('label name is ', con, self.cfg[con].name.encode('utf-8'), label_true)
 			if self.cfg[con].name.encode('utf-8')==label_true:
 				id_TB = con
 			if self.cfg[con].name.encode('utf-8')==label_false:
 				id_FB = con
-		print(id_TB, id_FB)
 		if id_TB==-1 and id_FB==-1:
 			raise('Error in Extracting Branch Block\n')
 
@@ -139,6 +120,8 @@ class Predicate():
 
 		#diamond block
 		con_t, con_f = self.cfg[id_TB].getConsumers(), self.cfg[id_FB].getConsumers()
+			
+		
 		
 		if len(con_t) ==1 and len(con_f)==1:
 			id_tail = con_t[0]
@@ -148,19 +131,34 @@ class Predicate():
 
 	def isValidCondBlock(self, node):
 		consumers  = node.getConsumers()
-		print(consumers)
+		
 		if len(consumers)==2:
-			for cons in consumers:
-				prod = self.cfg[cons].getProducers()
-				print(len(prod), prod , '44444444444444444')
-				if len(prod)!=1: 
-					prod.remove(node.id)
-					if not prod in consumers:
-						return False
-					# if self.branchLabel==1:
-					# 	print(node.id, consumers)
-					# 	ss
-					#return False
+			con1, con2 = consumers[0], consumers[1]
+			prod1, prod2 = self.cfg[con1].getProducers(), self.cfg[con2].getProducers()
+			if not (len(prod1)==1 and len(prod2)==1):
+				
+				if len(prod1) > len(prod2):
+
+					if not ( (prod1 == [con2, node.id]) or (prod1 == [node.id, con2]) ):
+						return True
+				else:
+					if ( (prod2 == [con1, node.id]) or (prod2 == [node.id, con1]) ):
+						return True
+				if not (len(prod1)==1 and len(prod2)==1):
+					return False
+			if not (prod1 == prod2):
+				return False
+			con1_con, con2_con = self.cfg[con1].getConsumers(), self.cfg[con2].getConsumers()
+			if not (len(con1_con)==1 and len(con2_con)==1):
+				return False
+			if not (con1_con == con2_con):
+				return False
+			# for cons in consumers:
+			# 	prod = self.cfg[cons].getProducers()
+			# 	if len(prod)!=1: 
+			# 		prod.remove(node.id)
+			# 		if not prod in consumers:
+			# 			return False
 
 			return True
 
@@ -231,11 +229,7 @@ class Predicate():
 		for var in self.TB_st.keys():
 			if var.idf in list(x.idf for x in self.FB_st) :
 				var.isLHS = True
-				print(var.type)
-
 				resolvedType = self.getResolvedType(var.type)
-
-
 				cmds_new += [IR.Assn(IR.Var(var.idf+'_merge', resolvedType, isLHS=True), IR.Select(IR.Var(condn_var.idf, (condn_var.type)), IR.Var(var.idf+"_t", (resolvedType)), IR.Var(var.idf+"_f", (resolvedType)) ) )]
 				cmds_new += [IR.Store(IR.Var(var.idf+'_merge', resolvedType), IR.Var(var.idf, var.type), IR.Align(self.TB_st[var]))]
 			else:
@@ -292,11 +286,6 @@ class Predicate():
 
 			self.mergeHead(node.head, node.TB, node.FB, node.tail)
 
-	'''Resolve methods for each type of IR we defined'''
-
-	# def resolveCmd(self, ir):
-	# 	if isinstance(ir, IR.Assn):
-	# 		return self.resovleAssn
 
 
 
@@ -358,17 +347,49 @@ class Predicate():
 		elif isinstance(ir, IR.Add):
 			self.PrintAdd(ir)
 		else:
-			print(IR)
 			raise('codegen for this not supported')
 
 
 
+	def writePrefix(self):
+		fname = os.path.join(self.fileName[:-2]+'_named.ll')
+			
+		cmdList = []
+		fp = open(fname, 'r')
+		lines = fp.readlines()
+		for line in lines:
+			cmd= line.strip()
+			if cmd=='bb:':
+				fp.close()
+				break
+			else:
+				cmdList.append(line)
+		for cmd in cmdList:
+			self.out.printf(cmd)
+
+
+	def writeSuffix(self):
+		fname = os.path.join(self.fileName[:-2]+'_named.ll')
+		cmdList = []
+		startRecord = False
+		fp = open(fname, 'r')
+		lines = fp.readlines()
+		for line in lines:
+			cmd= line.strip()
+			if cmd=='}':
+				startRecord = True
+			if startRecord == True:
+				cmdList.append(line)
+		for cmd in cmdList:
+			self.out.printf(cmd)
+
+
 	def printProg_debug(self):
+		self.writePrefix()
 		for id, node in self.cfg.items():
 			self.out.printf(node.name+':\n\t')
 			self.Print(IR.Prog(node.cmdIR_l))
-			self.out.printf('\n\n')
-			
+		self.writeSuffix()
 		
 
 	def PrintProg(self, ir):
@@ -399,7 +420,6 @@ class Predicate():
 
 	def PrintSelect(self, ir):
 		self.out.printf('select ')
-		print(ir.condn_var.isLHS, ir.condn_var.idf, ir.condn_var.type )
 		self.debug = True
 		self.Print(ir.condn_var)
 		self.out.printf(', ')

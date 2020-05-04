@@ -1,0 +1,18 @@
+digraph "CFG for 'example_forLoop' function" {
+	label="CFG for 'example_forLoop' function";
+
+	Node0x56429dee18f0 [shape=record,label="{bb:\l  %tmp = alloca i32, align 4\l  %tmp4 = alloca i32, align 4\l  %tmp5 = alloca i32*, align 8\l  %tmp6 = alloca i32, align 4\l  %tmp7 = alloca i32, align 4\l  %tmp8 = alloca i32, align 4\l  %tmp9 = alloca i32, align 4\l  %tmp10 = alloca i32, align 4\l  store i32 %arg, i32* %tmp, align 4\l  store i32 %arg1, i32* %tmp4, align 4\l  store i32* %arg2, i32** %tmp5, align 8\l  store i32 %arg3, i32* %tmp6, align 4\l  store i32 0, i32* %tmp9, align 4\l  store i32 0, i32* %tmp10, align 4\l  br label %bb11\l}"];
+	Node0x56429dee18f0 -> Node0x56429dee2820;
+	Node0x56429dee2820 [shape=record,label="{bb11:                                             \l  %tmp12 = load i32, i32* %tmp10, align 4\l  %tmp13 = icmp slt i32 %tmp12, 10\l  br i1 %tmp13, label %bb14, label %bb29\l|{<s0>T|<s1>F}}"];
+	Node0x56429dee2820:s0 -> Node0x56429dee2a30;
+	Node0x56429dee2820:s1 -> Node0x56429dee2b00;
+	Node0x56429dee2a30 [shape=record,label="{bb14:                                             \l  %tmp15 = load i32, i32* %tmp9, align 4\l  %tmp16 = icmp sgt i32 %tmp15, 2\l  %tmp18 = load i32, i32* %tmp, align 4\l  %tmp19 = load i32, i32* %tmp4, align 4\l  %tmp20 = add nsw i32 %tmp18, %tmp19\l  %tmp8_t = add nsw i32 %tmp20, 0\l  %tmp8_f = add nsw i32 0, 0\l  br label %bb22\l}"];
+	Node0x56429dee2a30 -> Node0x56429dee3310;
+	Node0x56429dee2b00 [shape=record,label="{bb29:                                             \l  %tmp30 = load i32, i32* %tmp6, align 4\l  %tmp31 = icmp eq i32 %tmp30, 0\l  %tmp33 = load i32, i32* %tmp8, align 4\l  %tmp34 = mul nsw i32 %tmp33, 6\l  %tmp7_t = add nsw i32 %tmp34, 0\l  br label %bb35\l}"];
+	Node0x56429dee2b00 -> Node0x56429dee36c0;
+	Node0x56429dee3310 [shape=record,label="{bb22:                                             \l  %tmp8_merge = select i1 %tmp16, i32 %tmp8_t, i32 %tmp8_f\l  store i32 %tmp8_merge, i32* %tmp8, align 4\l  %tmp23 = load i32, i32* %tmp9, align 4\l  %tmp24 = load i32, i32* %tmp7, align 4\l  %tmp25 = add nsw i32 %tmp23, %tmp24\l  store i32 %tmp25, i32* %tmp9, align 4\l  br label %bb26\l}"];
+	Node0x56429dee3310 -> Node0x56429dee3ae0;
+	Node0x56429dee3ae0 [shape=record,label="{bb26:                                             \l  %tmp27 = load i32, i32* %tmp10, align 4\l  %tmp28 = add nsw i32 %tmp27, 1\l  store i32 %tmp28, i32* %tmp10, align 4\l  br label %bb11\l}"];
+	Node0x56429dee3ae0 -> Node0x56429dee2820;
+	Node0x56429dee36c0 [shape=record,label="{bb35:                                             \l  %tmp7_merge = select i1 %tmp31, i32 %tmp7_t, i32 0\l  store i32 %tmp7_merge, i32* %tmp7, align 4\l  %tmp36 = load i32, i32* %tmp7, align 4\l  ret i32 %tmp36\l}"];
+}
