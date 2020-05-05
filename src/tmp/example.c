@@ -9,10 +9,5 @@ int example(int a, int b, int c, int d){
 		t =  0;
 	}
 
-
-	int t1 = 0;
-
-	if(d==0)
-		t1 = t *6;
-	return t1;
+	return t;
 }

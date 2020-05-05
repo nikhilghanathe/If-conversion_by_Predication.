@@ -1,3 +1,4 @@
+#base class for Codegen 
 class Writer:
 
 	def __init__(self, fileName):

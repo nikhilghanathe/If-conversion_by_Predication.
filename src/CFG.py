@@ -2,6 +2,7 @@ import os
 import copy
 import IR
 
+#base class for CDFG
 class CFGNode():
 	def __init__(self, name, id, cmdList):
 		self.name = name
@@ -43,6 +44,8 @@ class CFGNode():
 		return self.cmdIR_l
 
 
+
+#base class fo conditional blocks
 class BranchBlock():
 	def __init__(self, id, head):
 		self.id = id

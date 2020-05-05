@@ -23,9 +23,9 @@ Using language generation: IEEE1364-2001-noconfig,no-specify,xtypes,icarus-misc
 PARSING INPUT
 LOCATING TOP-LEVEL MODULES
    example_multiple_forLoop_multiple_tb_top
- ... done, 0.01 seconds.
+ ... done, 0 seconds.
 ELABORATING DESIGN
- ... done, 0.04 seconds.
+ ... done, 0.05 seconds.
 RUNNING FUNCTORS
  -F cprop ...
  ... Iteration detected 103 optimizations.
@@ -39,10 +39,10 @@ RUNNING FUNCTORS
  ... 2 iterations deleted 1909 dangling signals and 261 events.
  ... done
 CALCULATING ISLANDS
- ... done, 0 seconds.
+ ... done, 0.01 seconds.
 CODE GENERATION
  ... invoking target_design
- ... done, 0.03 seconds.
+ ... done, 0.02 seconds.
 STATISTICS
 lex_string: add_count=6634 hit_count=23629
 Icarus Verilog version 10.1 (stable) ()
@@ -63,13 +63,13 @@ Copyright 1998-2015 Stephen Williams
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg27ba42904" -f"/tmp/ivrlg7ba42904" -p"/tmp/ivrli7ba42904"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh7ba42904" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
+translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg22db08ff3" -f"/tmp/ivrlg2db08ff3" -p"/tmp/ivrli2db08ff3"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh2db08ff3" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
 Start reading vector           1's values from input file.
 
 Reading of vector values from input file completed. Simulation started.
- return_port =     723030   expected =     723030 
+ return_port =     297990   expected =     297990 
 
-Simulation ended after                53911 cycles.
+Simulation ended after                52371 cycles.
 
 Simulation completed with success
 

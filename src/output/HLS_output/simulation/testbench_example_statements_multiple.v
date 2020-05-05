@@ -118,7 +118,7 @@ module example_statements_multiple_tb(clock);
     end
   end
   endfunction
-  parameter MEMSIZE = 1, MEM_var_419568_419510=32, MEM_var_419573_419510=32, MEM_var_419578_419510=32, MEM_var_419583_419510=32, MEM_var_419588_419510=32, MEM_var_419593_419510=32, MEM_var_419643_419510=32, MEM_var_419692_419510=32, MEM_var_419735_419510=32, MEM_var_419802_419510=32, MEM_var_419812_419510=32, MEM_var_419995_419510=32, MEM_var_420060_419510=32;
+  parameter MEMSIZE = 1, MEM_var_419568_419510=32, MEM_var_419573_419510=32, MEM_var_419578_419510=32, MEM_var_419583_419510=32, MEM_var_419588_419510=32, MEM_var_419593_419510=32, MEM_var_419643_419510=32, MEM_var_419695_419510=32, MEM_var_419707_419510=32, MEM_var_419782_419510=32, MEM_var_419792_419510=32, MEM_var_419975_419510=32, MEM_var_420040_419510=32;
   // AUXILIARY VARIABLES DECLARATION
   time startTime, endTime, sim_time;
   integer res_file, file, _r_, _n_, _i_, _addr_i_;
@@ -151,7 +151,7 @@ module example_statements_multiple_tb(clock);
   reg [31:0] registered_return_port;
   
   // MODULE INSTANTIATION AND PORTS BINDING
-  example_statements_multiple #(.MEM_var_419568_419510(32), .MEM_var_419573_419510(32), .MEM_var_419578_419510(32), .MEM_var_419583_419510(32), .MEM_var_419588_419510(32), .MEM_var_419593_419510(32), .MEM_var_419643_419510(32), .MEM_var_419692_419510(32), .MEM_var_419735_419510(32), .MEM_var_419802_419510(32), .MEM_var_419812_419510(32), .MEM_var_419995_419510(32), .MEM_var_420060_419510(32)) example_statements_multiple (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .done_port(done_port), .return_port(return_port));
+  example_statements_multiple #(.MEM_var_419568_419510(32), .MEM_var_419573_419510(32), .MEM_var_419578_419510(32), .MEM_var_419583_419510(32), .MEM_var_419588_419510(32), .MEM_var_419593_419510(32), .MEM_var_419643_419510(32), .MEM_var_419695_419510(32), .MEM_var_419707_419510(32), .MEM_var_419782_419510(32), .MEM_var_419792_419510(32), .MEM_var_419975_419510(32), .MEM_var_420040_419510(32)) example_statements_multiple (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .done_port(done_port), .return_port(return_port));
   
   // Operation to be executed just one time
   initial

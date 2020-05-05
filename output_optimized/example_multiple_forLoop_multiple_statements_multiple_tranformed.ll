@@ -1,10 +1,10 @@
-; ModuleID = 'example_multiple_forLoop_multiple.ll'
-source_filename = "example_multiple_forLoop_multiple.c"
+; ModuleID = 'example_multiple_forLoop_multiple_statements_multiple.ll'
+source_filename = "example_multiple_forLoop_multiple_statements_multiple.c"
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: noinline nounwind optnone uwtable
-define i32 @example_multiple_forLoop_multiple(i32 %arg, i32 %arg1, i32 %arg2, i32 %arg3) #0 {
+define i32 @example_multiple_forLoop_multiple_statements_multiple(i32 %arg, i32 %arg1, i32 %arg2, i32 %arg3) #0 {
 bb:
 	  %tmp = alloca i32, align 4
   %tmp4 = alloca i32, align 4

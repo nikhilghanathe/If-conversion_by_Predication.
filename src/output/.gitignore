@@ -1,0 +1,3 @@
+*.xml
+*.mem
+HLS_output/

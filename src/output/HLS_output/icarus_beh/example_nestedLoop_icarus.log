@@ -34,17 +34,17 @@ RUNNING FUNCTORS
  ... done
  -F nodangle ...
  ... scan for dangling signal and event nodes. (scomplete=F, ecomplete=F)
- ... 1 iterations deleted 399 dangling signals and 0 events.
+ ... 1 iterations deleted 402 dangling signals and 0 events.
  ... scan for dangling signal and event nodes. (scomplete=T, ecomplete=F)
- ... 2 iterations deleted 399 dangling signals and 38 events.
+ ... 2 iterations deleted 402 dangling signals and 34 events.
  ... done
 CALCULATING ISLANDS
  ... done, 0 seconds.
 CODE GENERATION
  ... invoking target_design
- ... done, 0.01 seconds.
+ ... done, 0 seconds.
 STATISTICS
-lex_string: add_count=1958 hit_count=6080
+lex_string: add_count=1865 hit_count=6045
 Icarus Verilog version 10.1 (stable) ()
 
 Copyright 1998-2015 Stephen Williams
@@ -63,13 +63,13 @@ Copyright 1998-2015 Stephen Williams
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg2da338d4" -f"/tmp/ivrlgda338d4" -p"/tmp/ivrlida338d4"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlhda338d4" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
+translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg2354e2c5b" -f"/tmp/ivrlg354e2c5b" -p"/tmp/ivrli354e2c5b"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh354e2c5b" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
 Start reading vector           1's values from input file.
 
 Reading of vector values from input file completed. Simulation started.
- return_port =      44000   expected =      44000 
+ return_port =      50000   expected =      50000 
 
-Simulation ended after                11003 cycles.
+Simulation ended after                13003 cycles.
 
 Simulation completed with success
 

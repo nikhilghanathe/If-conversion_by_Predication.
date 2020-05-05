@@ -63,13 +63,13 @@ Copyright 1998-2015 Stephen Williams
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg245c9ae1b" -f"/tmp/ivrlg45c9ae1b" -p"/tmp/ivrli45c9ae1b"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh45c9ae1b" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
+translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg2221def4" -f"/tmp/ivrlg221def4" -p"/tmp/ivrli221def4"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh221def4" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
 Start reading vector           1's values from input file.
 
 Reading of vector values from input file completed. Simulation started.
- return_port =        110   expected =        110 
+ return_port =         93   expected =         93 
 
-Simulation ended after                   58 cycles.
+Simulation ended after                   57 cycles.
 
 Simulation completed with success
 

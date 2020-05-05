@@ -23,20 +23,20 @@ Using language generation: IEEE1364-2001-noconfig,no-specify,xtypes,icarus-misc
 PARSING INPUT
 LOCATING TOP-LEVEL MODULES
    example_statements_multiple_tb_top
- ... done, 0 seconds.
+ ... done, 0.01 seconds.
 ELABORATING DESIGN
- ... done, 0.03 seconds.
+ ... done, 0.02 seconds.
 RUNNING FUNCTORS
  -F cprop ...
- ... Iteration detected 68 optimizations.
+ ... Iteration detected 64 optimizations.
  ... Iteration detected 0 optimizations.
  ... Look for dangling constants
  ... done
  -F nodangle ...
  ... scan for dangling signal and event nodes. (scomplete=F, ecomplete=F)
- ... 1 iterations deleted 1216 dangling signals and 0 events.
+ ... 1 iterations deleted 1203 dangling signals and 0 events.
  ... scan for dangling signal and event nodes. (scomplete=T, ecomplete=F)
- ... 2 iterations deleted 1216 dangling signals and 263 events.
+ ... 2 iterations deleted 1203 dangling signals and 258 events.
  ... done
 CALCULATING ISLANDS
  ... done, 0 seconds.
@@ -44,7 +44,7 @@ CODE GENERATION
  ... invoking target_design
  ... done, 0.02 seconds.
 STATISTICS
-lex_string: add_count=4139 hit_count=17282
+lex_string: add_count=4156 hit_count=17167
 Icarus Verilog version 10.1 (stable) ()
 
 Copyright 1998-2015 Stephen Williams
@@ -63,13 +63,13 @@ Copyright 1998-2015 Stephen Williams
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg229aa23e1" -f"/tmp/ivrlg29aa23e1" -p"/tmp/ivrli29aa23e1"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh29aa23e1" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
+translate: /usr/lib/x86_64-linux-gnu/ivl/ivlpp  -v -L -F"/tmp/ivrlg2910c4f3" -f"/tmp/ivrlg910c4f3" -p"/tmp/ivrli910c4f3"  | /usr/lib/x86_64-linux-gnu/ivl/ivl -v -C"/tmp/ivrlh910c4f3" -C"/usr/lib/x86_64-linux-gnu/ivl/vvp.conf" -- -
 Start reading vector           1's values from input file.
 
 Reading of vector values from input file completed. Simulation started.
- return_port =   17668000   expected =   17668000 
+ return_port =  252896800   expected =  252896800 
 
-Simulation ended after                20404 cycles.
+Simulation ended after                21004 cycles.
 
 Simulation completed with success
 

@@ -118,7 +118,7 @@ module example_forLoop_tb(clock);
     end
   end
   endfunction
-  parameter MEMSIZE = 32, MEM_var_419568_419510=32, MEM_var_419573_419510=32, MEM_var_419585_419510=32, MEM_var_419590_419510=32, MEM_var_419595_419510=32, MEM_var_419610_419510=32, MEM_var_419649_419510=32;
+  parameter MEMSIZE = 1, MEM_var_419568_419510=32, MEM_var_419573_419510=32, MEM_var_419578_419510=32, MEM_var_419588_419510=32, MEM_var_419593_419510=32, MEM_var_419608_419510=32;
   // AUXILIARY VARIABLES DECLARATION
   time startTime, endTime, sim_time;
   integer res_file, file, _r_, _n_, _i_, _addr_i_;
@@ -141,7 +141,6 @@ module example_forLoop_tb(clock);
   reg [31:0] Pd5;
   reg [31:0] Pd6;
   reg [31:0] Pd7;
-  reg [7:0] ex_Pd7;
   reg [31:0] Pd8;
   
   reg start_next_sim;
@@ -152,7 +151,7 @@ module example_forLoop_tb(clock);
   reg [31:0] registered_return_port;
   
   // MODULE INSTANTIATION AND PORTS BINDING
-  example_forLoop #(.MEM_var_419568_419510(32), .MEM_var_419573_419510(32), .MEM_var_419585_419510(32), .MEM_var_419590_419510(32), .MEM_var_419595_419510(32), .MEM_var_419610_419510(32), .MEM_var_419649_419510(32)) example_forLoop (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .done_port(done_port), .return_port(return_port));
+  example_forLoop #(.MEM_var_419568_419510(32), .MEM_var_419573_419510(32), .MEM_var_419578_419510(32), .MEM_var_419588_419510(32), .MEM_var_419593_419510(32), .MEM_var_419608_419510(32)) example_forLoop (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .done_port(done_port), .return_port(return_port));
   
   // Operation to be executed just one time
   initial
@@ -194,7 +193,6 @@ module example_forLoop_tb(clock);
     Pd5 = 0;
     Pd6 = 0;
     Pd7 = 0;
-    ex_Pd7 = 0;
     Pd8 = 0;
     
     
@@ -414,50 +412,6 @@ module example_forLoop_tb(clock);
   begin
     if (start_results_comparison == 1)
     begin
-      
-      // OPTIONAL - Read a value for Pd7 --------------------------------------------------------------
-      _i_ = 0;
-      while (_ch_ == "/" || _ch_ == "\n" || _ch_ == "o")
-      begin
-        if (_ch_ == "o")
-        begin
-          compare_outputs = 1;
-          _r_ = $fscanf(file,"%b\n", ex_Pd7); // expected format: bbb...b (example: 00101110)
-          if (_r_ != 1)
-          begin
-            // error
-            $display("ERROR - Unknown error while reading the file. Character found: %c", _ch_[7:0]);
-            $fclose(res_file);
-            $fclose(file);
-            $finish;
-          end
-          if (_bambu_testbench_mem_[(Pd7 - base_addr) + _i_] !== ex_Pd7)
-          begin
-            success = 0;
-          end
-          _i_ = _i_ + 1;
-          _ch_ = $fgetc(file);
-        end
-        else
-        begin
-          // skip comments and empty lines
-          _r_ = $fgets(line, file);
-          _ch_ = $fgetc(file);
-        end
-      end
-      if (_ch_ == "e")
-      begin
-        _r_ = $fgets(line, file);
-        _ch_ = $fgetc(file);
-      end
-      else
-      begin
-      // error
-        $display("ERROR - Unknown error while reading the file. Character found: %c", _ch_[7:0]);
-        $fclose(res_file);
-        $fclose(file);
-        $finish;
-      end
       _i_ = 0;
       while (_ch_ == "/" || _ch_ == "\n" || _ch_ == "o")
       begin

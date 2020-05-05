@@ -8,6 +8,7 @@ import IR
 import IRUtil
 import Writer
 
+#Base class for IF-conversion
 class Predicate():
 	def __init__(self, fileName):
 		self.fileName = fileName
@@ -31,7 +32,7 @@ class Predicate():
 			writeCFG(self.cfg)
 		
 
-
+	#identify root node to start analysis
 	def getRootNode(self):
 		for id, node in self.cfg.items():
 			if not node.getProducers():
@@ -39,8 +40,7 @@ class Predicate():
 		return
 
 
-
-
+	#identify all candidate Conditional Blocks
 	def collectBranches(self):
 		rootNode = self.getRootNode()
 		for id, node in self.cfg.items():
@@ -48,6 +48,7 @@ class Predicate():
 		self.identifyCondBlocks(rootNode)
 		
 
+	#convert LLVM-IR to ICE-IR
 	def createIR(self):
 		cfg_new = {}
 		for id, node in self.cfg.items():
@@ -65,11 +66,9 @@ class Predicate():
 	#idenitfiy if this is the head od the 
 	def identifyHead(self, node):
 		cmd_l = []
-
 		for cmd in node.cmdIR_l:
 			if isinstance(cmd, IR.Branch):
 				condn_var, label_true, label_false = cmd.condn_var, cmd.label_true, cmd.label_false
-				
 				if condn_var.idf !='': #if it is a confitional branch block
 					if self.isValidCondBlock(node):		
 						b_node= BranchBlock(self.branchLabel, node.id)
@@ -101,6 +100,7 @@ class Predicate():
 		writeBranchBlocks(self.branch_blocks)
 
 
+	#returns TB, TB and tail of Conditional blocks
 	def getTFT(self, cmd, id):
 		node = self.cfg[id]
 		condn_var, label_true, label_false = cmd.condn_var, cmd.label_true.name[1:], cmd.label_false.name[1:]
@@ -112,7 +112,7 @@ class Predicate():
 			if self.cfg[con].name.encode('utf-8')==label_false:
 				id_FB = con
 		if id_TB==-1 and id_FB==-1:
-			raise('Error in Extracting Branch Block\n')
+			raise('Error in Extracting Branch Block\n') # should not reach here
 
 		if id_FB in self.cfg[id_TB].getConsumers():# triangle block
 			id_tail= id_FB
@@ -121,24 +121,23 @@ class Predicate():
 		#diamond block
 		con_t, con_f = self.cfg[id_TB].getConsumers(), self.cfg[id_FB].getConsumers()
 			
-		
-		
+		# tail and FB are same for traingle-formation
 		if len(con_t) ==1 and len(con_f)==1:
 			id_tail = con_t[0]
 		else:
 			raise('Error in Extracting Branch Block\n')			
 		return id_TB, id_FB, id_tail, id_tail
 
+	#check if this is a valid candidate
 	def isValidCondBlock(self, node):
 		consumers  = node.getConsumers()
 		
 		if len(consumers)==2:
 			con1, con2 = consumers[0], consumers[1]
 			prod1, prod2 = self.cfg[con1].getProducers(), self.cfg[con2].getProducers()
-			if not (len(prod1)==1 and len(prod2)==1):
-				
+			if not (len(prod1)==1 and len(prod2)==1): # should have not other producers other than Head node
+				#handle traingle-formation
 				if len(prod1) > len(prod2):
-
 					if not ( (prod1 == [con2, node.id]) or (prod1 == [node.id, con2]) ):
 						return True
 				else:
@@ -146,6 +145,7 @@ class Predicate():
 						return True
 				if not (len(prod1)==1 and len(prod2)==1):
 					return False
+			#handle diamond-formation
 			if not (prod1 == prod2):
 				return False
 			con1_con, con2_con = self.cfg[con1].getConsumers(), self.cfg[con2].getConsumers()
@@ -153,14 +153,7 @@ class Predicate():
 				return False
 			if not (con1_con == con2_con):
 				return False
-			# for cons in consumers:
-			# 	prod = self.cfg[cons].getProducers()
-			# 	if len(prod)!=1: 
-			# 		prod.remove(node.id)
-			# 		if not prod in consumers:
-			# 			return False
-
-			return True
+			return True # if all tests are passed then its a valid candidate
 
 		return False
 
@@ -189,6 +182,7 @@ class Predicate():
 				src, dest, align = cm.src, cm.dest, cm.align
 				#cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_t', (dest.type)), cm.align)
 				suffix = str(Config.count) 
+				#replace store with temp assignment
 				cm_new = IR.Assn(IR.Var(dest.idf+'_t'+suffix, (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
 				cmds_new += [cm_new]
 				self.TB_st.update({dest:cm.align.val})
@@ -208,6 +202,7 @@ class Predicate():
 				src, dest, align = cm.src, cm.dest, cm.align
 				#cm_new = IR.Store(IR.Var(src.idf, (src.type)), IR.Var(dest.idf+'_f', (dest.type)), cm.align)
 				suffix = str(Config.count)
+				#replace store with temp assignment
 				cm_new = IR.Assn(IR.Var(dest.idf+'_f'+suffix, (dest.type), isLHS=True) , IR.Add( IR.Var(src.idf, (src.type)), IR.Int(0) ))
 				cmds_new += [cm_new]
 				self.FB_st.update({dest:cm.align.val})
@@ -222,13 +217,14 @@ class Predicate():
 	def getResolvedType(self, var_type):
 		type = var_type.type
 		if type[-1]=='*':#if a pointer
-			return IR.Type(type[:-1]) #our tem variables are non pointers always
+			return IR.Type(type[:-1]) #our temp variables are non pointers always
 		else:
 			return IR.Type(type)
 	def transformTail(self, id, condn_var):
 		node = self.cfg[id]
 		cmds = node.getCmdIR_l()
 		cmds_new = []
+		#Insert 'select' instructions for all 'stores' replaced
 		for var in self.TB_st.keys():
 			if var.idf in list(x.idf for x in self.FB_st) :
 				var.isLHS = True
@@ -249,6 +245,8 @@ class Predicate():
 		
 
 
+	#remove TB and FB and merge into Head node
+	# add uncontional branch to tail node
 	def mergeHead(self, head, TB, FB, tail):
 		headNode = self.cfg[head]
 		cmds_head = headNode.getCmdIR_l()
@@ -281,8 +279,6 @@ class Predicate():
 		cmds_head = headNode.getCmdIR_l()
 
 
-
-
 	def transformBranchBlocks(self):
 		Config.count= 0 # monotonic counter for making sure the code is SSA conformed
 		for id, node in self.branch_blocks.items():
@@ -295,7 +291,7 @@ class Predicate():
 				self.transformTail(node.tail, node.condn_var)
 
 			self.mergeHead(node.head, node.TB, node.FB, node.tail)
-			Config.count +=1
+			Config.count +=1 # montonic counter to avoid name clashes
 
 
 
@@ -310,7 +306,10 @@ class Predicate():
 		#read json file and get the basic blocks
 		self.parseJson()
 
+		#Convert LLVM-IR to ICE-IR
 		self.createIR()
+
+		print(' The number of basic blocks BEFORE opt ', len(list(self.cfg.keys())))
 
 		#identify all if-else candiate blocks
 		self.collectBranches()
@@ -322,6 +321,9 @@ class Predicate():
 		self.out.close()
 
 		os.chdir(os.path.join('..'))
+
+		print(' The number of basic blocks AFTER opt ', len(list(self.cfg.keys())))
+
 
 
 
@@ -499,7 +501,6 @@ def runPredicatePass():
 	parser.add_argument("-attempts", type=str, default = 1, metavar = '', help = "Enter the number of attempts at routing to be made \n")
 	parser.add_argument("-verbose", type=str, choices = ['true', 'false'], default = "false", metavar = '', help = "Pauses the progress and waits for a key press to proceed \n")
 	parser.add_argument("-draw", type=str, choices = ['true', 'false'], default = "false", metavar = '', help = "Flag to indicate whether the program should draw through its progress \n")
-	# parser.add_argument("-runSim", type=int, default = -1, metavar = '', help = "number of data-points to run.  IF NOT SPECIFIED, ALL DATA-POINTS in the testing dataset are run  \n")
 	
 	args = parser.parse_args()
 

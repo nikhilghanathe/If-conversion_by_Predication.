@@ -118,7 +118,7 @@ module example_nestedLoop_tb(clock);
     end
   end
   endfunction
-  parameter MEMSIZE = 96, MEM_var_419589_419510=32, MEM_var_419594_419510=32, MEM_var_419599_419510=32, MEM_var_419604_419510=32, MEM_var_419628_419510=32, MEM_var_419633_419510=32, MEM_var_419646_419510=32, MEM_var_419665_419510=32, MEM_var_419702_419510=32;
+  parameter MEMSIZE = 96, MEM_var_419589_419510=32, MEM_var_419594_419510=32, MEM_var_419599_419510=32, MEM_var_419604_419510=32, MEM_var_419628_419510=32, MEM_var_419633_419510=32, MEM_var_419646_419510=32, MEM_var_419672_419510=32, MEM_var_419692_419510=32;
   // AUXILIARY VARIABLES DECLARATION
   time startTime, endTime, sim_time;
   integer res_file, file, _r_, _n_, _i_, _addr_i_;
@@ -157,7 +157,7 @@ module example_nestedLoop_tb(clock);
   reg [31:0] registered_return_port;
   
   // MODULE INSTANTIATION AND PORTS BINDING
-  example_nestedLoop #(.MEM_var_419589_419510(32), .MEM_var_419594_419510(32), .MEM_var_419599_419510(32), .MEM_var_419604_419510(32), .MEM_var_419628_419510(32), .MEM_var_419633_419510(32), .MEM_var_419646_419510(32), .MEM_var_419665_419510(32), .MEM_var_419702_419510(32)) example_nestedLoop (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .Pd9(Pd9), .Pd10(Pd10), .Pd11(Pd11), .done_port(done_port), .return_port(return_port));
+  example_nestedLoop #(.MEM_var_419589_419510(32), .MEM_var_419594_419510(32), .MEM_var_419599_419510(32), .MEM_var_419604_419510(32), .MEM_var_419628_419510(32), .MEM_var_419633_419510(32), .MEM_var_419646_419510(32), .MEM_var_419672_419510(32), .MEM_var_419692_419510(32)) example_nestedLoop (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .Pd9(Pd9), .Pd10(Pd10), .Pd11(Pd11), .done_port(done_port), .return_port(return_port));
   
   // Operation to be executed just one time
   initial

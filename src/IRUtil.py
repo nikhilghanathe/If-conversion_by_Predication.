@@ -26,6 +26,7 @@ def parseCmd(cmd):
 	return cmd_new 
 
 
+#Simple parser module
 def resolveCmd(cmd, cmd_old):
 	if cmd_old.encode('utf-8')[0] =='|':#signals metadata
 		return IR.Statement('')

@@ -118,7 +118,7 @@ module example_tb(clock);
     end
   end
   endfunction
-  parameter MEMSIZE = 1, MEM_var_419563_419510=32, MEM_var_419566_419510=32, MEM_var_419569_419510=32;
+  parameter MEMSIZE = 1, MEM_var_419551_419510=32, MEM_var_419554_419510=32, MEM_var_419560_419510=32, MEM_var_419563_419510=32, MEM_var_419566_419510=32;
   // AUXILIARY VARIABLES DECLARATION
   time startTime, endTime, sim_time;
   integer res_file, file, _r_, _n_, _i_, _addr_i_;
@@ -151,7 +151,7 @@ module example_tb(clock);
   reg [31:0] registered_return_port;
   
   // MODULE INSTANTIATION AND PORTS BINDING
-  example #(.MEM_var_419563_419510(32), .MEM_var_419566_419510(32), .MEM_var_419569_419510(32)) example (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .done_port(done_port), .return_port(return_port));
+  example #(.MEM_var_419551_419510(32), .MEM_var_419554_419510(32), .MEM_var_419560_419510(32), .MEM_var_419563_419510(32), .MEM_var_419566_419510(32)) example (.clock(clock), .reset(reset), .start_port(start_port), .Pd5(Pd5), .Pd6(Pd6), .Pd7(Pd7), .Pd8(Pd8), .done_port(done_port), .return_port(return_port));
   
   // Operation to be executed just one time
   initial
